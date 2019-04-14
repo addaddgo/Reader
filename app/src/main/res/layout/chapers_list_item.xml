@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/chapter_item_boder_line">
+
+    <TextView
+        android:layout_marginTop="@dimen/margin_of_chapter_list"
+        android:id="@+id/chapter_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_big"/>
+
+</android.support.constraint.ConstraintLayout>

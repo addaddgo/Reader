@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Fragment.CategoryFragment">
+
+    <TextView
+        android:text="@string/male"
+        android:id="@+id/male_category_text"
+        android:textSize="@dimen/text_size_huge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/category_major_male_recycler"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp">
+    </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:text="@string/female"
+        android:id="@+id/female_category_text"
+        android:textSize="@dimen/text_size_huge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/category_major_female_recycler"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp">
+    </android.support.v7.widget.RecyclerView>
+
+
+    <TextView
+        android:text="@string/press"
+        android:id="@+id/press_category_text"
+        android:textSize="@dimen/text_size_huge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/category_major_press_recycler"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp">
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>
