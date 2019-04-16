@@ -56,11 +56,11 @@ public class ListInCategoryActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull ListInCategoryActivity.RecyclerCategoryAdapter.HolderView holder, int position) {
-            String shortIntro = getString(R.string.short_introduction_ranking) + bookInCategoryBean.getBooks().get(position).getShortIntro();
+            String shortIntro = getString(R.string.short_introduction) + bookInCategoryBean.getBooks().get(position).getShortIntro();
             holder.shortIntroduction.setText(shortIntro);
-            String author = getString(R.string.author_ranking)+ bookInCategoryBean.getBooks().get(position).getAuthor();
+            String author = getString(R.string.author)+ bookInCategoryBean.getBooks().get(position).getAuthor();
             holder.author.setText(author);
-            String title = getString(R.string.title_ranking) + bookInCategoryBean.getBooks().get(position).getTitle();
+            String title = getString(R.string.book_name) + bookInCategoryBean.getBooks().get(position).getTitle();
             holder.title.setText(title);
             holder.bookID = bookInCategoryBean.getBooks().get(position).get_id();
         }
@@ -68,7 +68,7 @@ public class ListInCategoryActivity extends AppCompatActivity {
         @NonNull
         @Override
         public ListInCategoryActivity.RecyclerCategoryAdapter.HolderView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_in_ranking_item,parent,false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.find_rank_list_item,parent,false);
             final ListInCategoryActivity.RecyclerCategoryAdapter.HolderView holderView = new ListInCategoryActivity.RecyclerCategoryAdapter.HolderView(view);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -106,9 +106,6 @@ public class ListInCategoryActivity extends AppCompatActivity {
 
             public HolderView(@NonNull View itemView) {
                 super(itemView);
-                title = itemView.findViewById(R.id.title_item_ranking);
-                author = itemView.findViewById(R.id.author_item_ranking);
-                shortIntroduction = itemView.findViewById(R.id.short_introduction_item_ranking);
             }
         }
 

@@ -37,7 +37,10 @@
         <activity android:name=".commentActivity.BookCommentActivity" />
         <activity android:name=".commentActivity.BookCommentDetailActivity" />
         <activity android:name=".commentActivity.RecommendBookActivity" />
-        <activity android:name=".commentActivity.OriginalCommentActivity"></activity>
+        <activity android:name=".commentActivity.OriginalCommentActivity" />
+        <activity android:name=".findActivity.CategoryActivity" />
+        <activity android:name=".findActivity.RankingActivity" />
+        <activity android:name=".findActivity.RankListActivity"></activity>
     </application>
 
 </manifest>

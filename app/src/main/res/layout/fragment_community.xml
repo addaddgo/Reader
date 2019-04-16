@@ -4,15 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragment.CommunityFragment">
+    android:background="@color/colorWhite"
+    tools:context=".mainFragment.CommunityFragment">
 
 
     <!-- 综合评论区 -->
     <LinearLayout
+        android:layout_marginTop="@dimen/community_icon_margin_top"
         android:id="@+id/community_comprehensive_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
+            android:src="@drawable/comprehensive_comment"
             android:layout_marginStart="@dimen/community_icon_margin_start"
             android:layout_width="@dimen/community_icon_size"
             android:layout_height="@dimen/community_icon_size" />
@@ -32,6 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
+            android:src="@drawable/book_comment"
             android:layout_marginStart="@dimen/community_icon_margin_start"
             android:layout_width="@dimen/community_icon_size"
             android:layout_height="@dimen/community_icon_size" />
@@ -52,6 +56,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:src="@drawable/recommend_book_comment"
             android:layout_marginStart="@dimen/community_icon_margin_start"
             android:layout_width="@dimen/community_icon_size"
             android:layout_height="@dimen/community_icon_size" />
@@ -92,6 +97,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
+            android:src="@drawable/original"
             android:layout_marginStart="@dimen/community_icon_margin_start"
             android:layout_width="@dimen/community_icon_size"
             android:layout_height="@dimen/community_icon_size" />

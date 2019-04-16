@@ -9,16 +9,21 @@
     <string name="category">分类</string>
     <string name="ranking">排行榜</string>
 
-    <!-- rankingFrag-->
+
+    <!-- rankingActivity-->
+    //find
     <string name="male">男生</string>
     <string name="female">女生</string>
+    <string name="picture">picture</string>
+    <string name="epub">epub</string>
     <string name="month_ranking">月榜</string>
     <string name="total_ranking">总榜</string>
     <string name="week_ranking">周榜</string>
     <string name="search_book_hint">搜索</string>
-    <string name="title_ranking">书名 :</string>
-    <string name="author_ranking">作者 :</string>
-    <string name="short_introduction_ranking">简介 :</string>
+    <string name="book_name">书名 :</string>
+    <string name="author">作者 :</string>
+    <string name="tag">标签 :</string>
+    <string name="short_introduction">简介 :</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

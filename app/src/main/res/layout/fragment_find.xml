@@ -1,14 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorWhite"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.FindFragment">
+    android:orientation="vertical"
+    tools:context=".mainFragment.FindFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+    android:id="@+id/find_ranking"
+    android:layout_marginTop="@dimen/community_icon_margin_top"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:src="@drawable/ranking"
+        android:layout_marginStart="@dimen/community_icon_margin_start"
+        android:layout_width="@dimen/community_icon_size"
+        android:layout_height="@dimen/community_icon_size" />
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:textSize="@dimen/text_size_big"
+        android:layout_marginStart="@dimen/community_icon_margin_start"
+        android:gravity="center"
+        android:text="@string/ranking"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+    </LinearLayout>
 
-</FrameLayout>
+    <LinearLayout
+        android:id="@+id/find_category"
+        android:layout_marginTop="@dimen/community_icon_margin_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <ImageView
+        android:src="@drawable/category"
+        android:layout_marginStart="@dimen/community_icon_margin_start"
+        android:layout_width="@dimen/community_icon_size"
+        android:layout_height="@dimen/community_icon_size" />
+    <TextView
+        android:textSize="@dimen/text_size_big"
+        android:layout_marginStart="@dimen/community_icon_margin_start"
+        android:gravity="center"
+        android:text="@string/category"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+    </LinearLayout>
+</LinearLayout>

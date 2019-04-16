@@ -1,4 +1,4 @@
-package com.example.hp.readingyouself.fragment;
+package com.example.hp.readingyouself.mainFragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -159,11 +159,11 @@ public class RankingFragment extends Fragment implements View.OnClickListener {
 
         @Override
         public void onBindViewHolder(@NonNull HolderView holder, int position) {
-            String shortIntro = getString(R.string.short_introduction_ranking) + rank.getBooks()[position].getShortIntroduction();
+            String shortIntro = getString(R.string.short_introduction) + rank.getBooks()[position].getShortIntroduction();
             holder.shortIntroduction.setText(shortIntro);
-            String author = getString(R.string.author_ranking)+ rank.getBooks()[position].getAuthor();
+            String author = getString(R.string.author)+ rank.getBooks()[position].getAuthor();
             holder.author.setText(author);
-            String title = getString(R.string.title_ranking) + rank.getBooks()[position].getTitle();
+            String title = getString(R.string.book_name) + rank.getBooks()[position].getTitle();
             holder.title.setText(title);
             holder.position = position;
         }
@@ -171,7 +171,7 @@ public class RankingFragment extends Fragment implements View.OnClickListener {
         @NonNull
         @Override
         public HolderView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-          View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_in_ranking_item,parent,false);
+          View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.find_rank_list_item,parent,false);
           final HolderView holderView = new HolderView(view);
           view.setOnClickListener(new View.OnClickListener() {
               @Override
@@ -184,7 +184,6 @@ public class RankingFragment extends Fragment implements View.OnClickListener {
           });
           return holderView;
         }
-
 
         @Override
         public int getItemCount() {
@@ -211,18 +210,12 @@ public class RankingFragment extends Fragment implements View.OnClickListener {
 
             public HolderView(@NonNull View itemView) {
                 super(itemView);
-                title = itemView.findViewById(R.id.title_item_ranking);
-                author = itemView.findViewById(R.id.author_item_ranking);
-                shortIntroduction = itemView.findViewById(R.id.short_introduction_item_ranking);
             }
         }
 
     }
 
 
-    public void reSetRank(Rank rank){
-        this.recyclerRankingAdapter.reSetRank(rank);
-    }
 
     @Override
     public void onAttach(Context context) {

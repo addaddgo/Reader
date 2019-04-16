@@ -18,6 +18,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initBeforeBindServiceOnCreated();
         handler = new MyHandler(getMainLooper());
         Intent intent = new Intent(this,DataGiveService.class);
         bindService(intent,serviceConnection,BIND_AUTO_CREATE);
@@ -67,6 +68,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             super.handleMessage(msg);
             onHandleMessage(msg);
         }
+    }
+
+    protected void initBeforeBindServiceOnCreated(){
+
     }
 
     protected abstract void onHandleMessage(Message msg);

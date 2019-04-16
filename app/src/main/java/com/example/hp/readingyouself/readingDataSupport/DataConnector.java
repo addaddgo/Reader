@@ -10,6 +10,7 @@ import com.example.hp.readingyouself.MaiActivityInterface;
 import com.example.hp.readingyouself.ChapterActivity;
 import com.example.hp.readingyouself.commentActivity.commentBean.BookCommentListBean;
 import com.example.hp.readingyouself.commentActivity.commentBean.RecommendBookListBean;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.AllRankingBean;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.BookChapter;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.BookInCategoryBean;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.BookInformation;
@@ -17,6 +18,7 @@ import com.example.hp.readingyouself.readingDataSupport.dataForm.BookSummary;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.CategoryBean;
 import com.example.hp.readingyouself.commentActivity.commentBean.ComprehensiveAndOriginalCommentBean;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.Rank;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.RankBean;
 import com.example.hp.readingyouself.readingDataSupport.locData.LocDataGiver;
 import com.example.hp.readingyouself.readingDataSupport.netData.NetDataGiver;
 
@@ -201,9 +203,7 @@ public class DataConnector {
             public void run() {
                 BookInCategoryBean bookInCategoryBean = netDataGiver.getBookInCategoryBean(type,major,minor,start,limit);
                 if(bookInCategoryBean != null && workHandler != null){
-                    Message message = workHandler.obtainMessage();
-                    message.obj = bookInCategoryBean;
-                    workHandler.sendMessage(message);
+                        sendObject(bookInCategoryBean);
                 }else {
                     //TODO(6)从本地
                 }
@@ -220,9 +220,7 @@ public class DataConnector {
                 if(comprehensiveCommentBean == null){
                     //
                 }else if (workHandler != null){
-                        Message message = workHandler.obtainMessage();
-                        message.obj = comprehensiveCommentBean;
-                        workHandler.sendMessage(message);
+                    sendObject(comprehensiveCommentBean);
                 }
             }
         });
@@ -237,9 +235,7 @@ public class DataConnector {
                 if(comprehensiveCommentBean == null){
                     //
                 }else if (workHandler != null){
-                    Message message = workHandler.obtainMessage();
-                    message.obj = comprehensiveCommentBean;
-                    workHandler.sendMessage(message);
+                    sendObject(comprehensiveCommentBean);
                 }
             }
         });
@@ -254,9 +250,7 @@ public class DataConnector {
                 if(bookCommentBean == null){
 
                 }else if(workHandler != null){
-                    Message message = workHandler.obtainMessage();
-                    message.obj = bookCommentBean;
-                    workHandler.sendMessage(message);
+                    sendObject(bookCommentBean);
                 }
             }
         });
@@ -271,12 +265,45 @@ public class DataConnector {
                 if(recommendBookListBean == null){
 
                 }else if(workHandler != null){
-                    Message message = workHandler.obtainMessage();
-                    message.obj = recommendBookListBean;
-                    workHandler.sendMessage(message);
+                    sendObject(recommendBookListBean);
                 }
             }
         });
+    }
+
+    //获取所有的排行榜
+    public void sendAllRankinBean(){
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                AllRankingBean allRankingBean = netDataGiver.getAllRankingList();
+                if(allRankingBean == null){
+
+                }else if(workHandler != null){
+                    sendObject(allRankingBean);
+                }
+            }
+        });
+    }
+
+    //获得某一书榜
+    public void sendRanking(final String id){
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                RankBean rankBean = netDataGiver.getTotalRankBeanByRankId(id);
+                if(rankBean == null){
+
+                }else if(workHandler != null){
+                    sendObject(rankBean);
+                }
+            }
+        });
+    }
+    private void sendObject(Object object){
+        Message message = workHandler.obtainMessage();
+        message.obj = object;
+        workHandler.sendMessage(message);
     }
 
     public ArrayList<BookChapter> getCurrentBookChapters() {

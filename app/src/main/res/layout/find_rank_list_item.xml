@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/find_ranking_list_item"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/find_ranking_item_image"
+        android:layout_width="@dimen/find_book_image_size"
+        android:layout_height="@dimen/find_book_image_size"/>
+
+    <TextView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/find_ranking_item_image"
+        android:id="@+id/find_ranking_item_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_mid"/>
+
+    <TextView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/find_ranking_item_author"
+        android:layout_marginStart="10dp"
+        android:id="@+id/find_ranking_item_book_name"
+        android:layout_width="@dimen/find_book_name_width"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_mid"/>
+
+    <TextView
+        app:layout_constraintTop_toBottomOf="@id/find_ranking_item_book_name"
+        app:layout_constraintStart_toEndOf="@id/find_ranking_item_image"
+        android:layout_marginTop="3dp"
+        android:id="@+id/find_ranking_item_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_small"/>
+
+    <TextView
+        app:layout_constraintTop_toBottomOf="@id/find_ranking_item_tag"
+        app:layout_constraintStart_toEndOf="@id/find_ranking_item_image"
+        android:layout_marginTop="3dp"
+        android:id="@+id/find_ranking_item_shortIntro"
+        android:layout_width="@dimen/find_book_shortIntro_width"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_small"/>
+
+</android.support.constraint.ConstraintLayout>

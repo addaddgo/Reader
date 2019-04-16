@@ -5,7 +5,7 @@ import java.util.List;
 public class ComprehensiveAndOriginalCommentDetailBean {
 
     /**
-     * post : {"_id":"59b5edbfe41bc82033773be9","author":{"_id":"56e903c1febd4661455a0692","avatar":"/avatar/65/be/65be796b6f8d0e0a8179737752a991c9","nickname":"追书家的眼镜娘","activityAvatar":"/activities/20180215/4.jpg","type":"official","lv":10,"gender":"female","rank":null,"created":"2016-03-16T06:57:05.000Z","id":"56e903c1febd4661455a0692"},"type":"normal","isStopPriority":false,"game":null,"book":null,"deleted":false,"likeCount":721,"isStick":false,"block":"ramble","state":"normal","updated":"2018-07-24T04:36:38.290Z","created":"2017-09-11T01:58:23.843Z","commentCount":4573,"voteCount":0,"votes":[],"content":"(-@y@) [扶眼镜] 说起完结文，总会有基本你超想让作者出番外/续集的吧！不仅仅是小说主线人物的番外，其他人物也有TA精彩的故事想要知道。那对于你们来，你们最希望哪本小说出番外/续集呢？\r\n\r\n《↘↘↘直接本帖回帖格式：》\r\n#希望#+______（书名/电视剧/动漫）出番外/续集+______（想看什么剧情等相关话题内容）\r\n【周三（9月13日） 抽奖，随机选择符合要求的评论奖励666追书券】\r\n\r\n--------------------------------\r\n*请回复讨论与本期话题相关的内容，与其无关的楼层会被官方V删除。\r\n*《相关功能问题请到反馈区发帖》\r\n*如果有小伙伴发现问题解决不了（比如闪退问题），请第一时间先关注微信公众号【zssqxs】输入【RG】和客服反馈！\r\n*书架上有书籍丢失问题：①在微信公众号找在线客服清理书架缓存；②向在线客服进行登记。\r\n\r\n--------------------------------\r\n你们不赚点书券在追更完之后看看漫画咩~\r\n（安卓3.115.1版本 、IOS 2.26.24版本及以上版本有【漫画专区】哦！）\r\n--------------------------------\r\n《敲黑板》\r\n不符合回帖格式一律没奖励机会。每次镜娘的活动和话题，只有认真互动，都是有几率找到自己感兴趣的小说，解决书荒问题。\r\n--------------------------------\r\n另外，天蚕土豆新书9月14日，全网发布！你们猜这次的书名会是什么呢？\r\n--------------------------------\r\n本话题精彩评论奖励已发，名单见\r\n★[[post:59b8fe9201bed9911690dca6 【传送门】话题回顾：9月11日镜娘话题]]","title":"【话题】你最希望哪本小说出番外/续集？","shareLink":"http://share.zhuishushenqi.com/post/59b5edbfe41bc82033773be9","id":"59b5edbfe41bc82033773be9"}
+     * post : {"_id":"59b5edbfe41bc82033773be9","author":{"_id":"56e903c1febd4661455a0692","avatar":"/avatar/65/be/65be796b6f8d0e0a8179737752a991c9","nickname":"追书家的眼镜娘","activityAvatar":"/activities/20180215/4.jpg","type":"official","lv":10,"gender":"male","rank":null,"created":"2016-03-16T06:57:05.000Z","id":"56e903c1febd4661455a0692"},"type":"normal","isStopPriority":false,"game":null,"book":null,"deleted":false,"likeCount":721,"isStick":false,"block":"ramble","state":"normal","updated":"2018-07-24T04:36:38.290Z","created":"2017-09-11T01:58:23.843Z","commentCount":4573,"voteCount":0,"votes":[],"content":"(-@y@) [扶眼镜] 说起完结文，总会有基本你超想让作者出番外/续集的吧！不仅仅是小说主线人物的番外，其他人物也有TA精彩的故事想要知道。那对于你们来，你们最希望哪本小说出番外/续集呢？\r\n\r\n《↘↘↘直接本帖回帖格式：》\r\n#希望#+______（书名/电视剧/动漫）出番外/续集+______（想看什么剧情等相关话题内容）\r\n【周三（9月13日） 抽奖，随机选择符合要求的评论奖励666追书券】\r\n\r\n--------------------------------\r\n*请回复讨论与本期话题相关的内容，与其无关的楼层会被官方V删除。\r\n*《相关功能问题请到反馈区发帖》\r\n*如果有小伙伴发现问题解决不了（比如闪退问题），请第一时间先关注微信公众号【zssqxs】输入【RG】和客服反馈！\r\n*书架上有书籍丢失问题：①在微信公众号找在线客服清理书架缓存；②向在线客服进行登记。\r\n\r\n--------------------------------\r\n你们不赚点书券在追更完之后看看漫画咩~\r\n（安卓3.115.1版本 、IOS 2.26.24版本及以上版本有【漫画专区】哦！）\r\n--------------------------------\r\n《敲黑板》\r\n不符合回帖格式一律没奖励机会。每次镜娘的活动和话题，只有认真互动，都是有几率找到自己感兴趣的小说，解决书荒问题。\r\n--------------------------------\r\n另外，天蚕土豆新书9月14日，全网发布！你们猜这次的书名会是什么呢？\r\n--------------------------------\r\n本话题精彩评论奖励已发，名单见\r\n★[[post:59b8fe9201bed9911690dca6 【传送门】话题回顾：9月11日镜娘话题]]","title":"【话题】你最希望哪本小说出番外/续集？","shareLink":"http://share.zhuishushenqi.com/post/59b5edbfe41bc82033773be9","id":"59b5edbfe41bc82033773be9"}
      * ok : true
      */
 
@@ -31,7 +31,7 @@ public class ComprehensiveAndOriginalCommentDetailBean {
     public static class PostBean {
         /**
          * _id : 59b5edbfe41bc82033773be9
-         * author : {"_id":"56e903c1febd4661455a0692","avatar":"/avatar/65/be/65be796b6f8d0e0a8179737752a991c9","nickname":"追书家的眼镜娘","activityAvatar":"/activities/20180215/4.jpg","type":"official","lv":10,"gender":"female","rank":null,"created":"2016-03-16T06:57:05.000Z","id":"56e903c1febd4661455a0692"}
+         * author : {"_id":"56e903c1febd4661455a0692","avatar":"/avatar/65/be/65be796b6f8d0e0a8179737752a991c9","nickname":"追书家的眼镜娘","activityAvatar":"/activities/20180215/4.jpg","type":"official","lv":10,"gender":"male","rank":null,"created":"2016-03-16T06:57:05.000Z","id":"56e903c1febd4661455a0692"}
          * type : normal
          * isStopPriority : false
          * game : null
@@ -263,7 +263,7 @@ public class ComprehensiveAndOriginalCommentDetailBean {
              * activityAvatar : /activities/20180215/4.jpg
              * type : official
              * lv : 10
-             * gender : female
+             * gender : male
              * rank : null
              * created : 2016-03-16T06:57:05.000Z
              * id : 56e903c1febd4661455a0692

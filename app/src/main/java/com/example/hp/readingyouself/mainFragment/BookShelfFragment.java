@@ -1,4 +1,4 @@
-package com.example.hp.readingyouself.fragment;
+package com.example.hp.readingyouself.mainFragment;
 
 import android.content.Context;
 import android.net.Uri;

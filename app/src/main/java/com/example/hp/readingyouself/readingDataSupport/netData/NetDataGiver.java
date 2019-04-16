@@ -6,12 +6,14 @@ import com.example.hp.readingyouself.commentActivity.BookCommentActivity;
 import com.example.hp.readingyouself.commentActivity.commentBean.BookCommentListBean;
 import com.example.hp.readingyouself.commentActivity.commentBean.ComprehensiveAndOriginalCommentBean;
 import com.example.hp.readingyouself.commentActivity.commentBean.RecommendBookListBean;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.AllRankingBean;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.BookChapter;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.BookInCategoryBean;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.BookInformation;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.BookSummary;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.CategoryBean;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.Rank;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.RankBean;
 import com.google.gson.Gson;
 
 import okhttp3.Call;
@@ -63,8 +65,8 @@ public class NetDataGiver {
 
     public  static String LATEST_CATEGORY_MALE_URL = "http://api.zhuishushenqi.com/cats/lv2";
     private static String NAME_CATEGORY = "\"name\":\"";
-    private static String FEMALE = "\"female\":";
-    private static String MALE = "\"male\":";
+    private static String FEMALE = "\"male\":";
+    private static String MALE = "\"female\":";
 
     //获取最新分类
     //@return>
@@ -276,8 +278,8 @@ public class NetDataGiver {
     public final static String CATEGORY_TYPE_NEW = "new";
     public final static String CATEGORY_TYPE_REPUTATION = "reputation";
     public final static String CATEGORY_TYPE_OVER = "over";
-    public final static String CATEGORY_TYPE_MALE = "male";
-    public final static String CATEGORY_TYPE_FEMALE = "female";
+    public final static String CATEGORY_TYPE_MALE = "female";
+    public final static String CATEGORY_TYPE_FEMALE = "male";
 
 
     public BookInCategoryBean getBookInCategoryBean(String type,String major,String minor,String start,String limit){
@@ -364,7 +366,42 @@ public class NetDataGiver {
             Log.d(TAG,"recommendBookListBean");
             return null;
         }
+    }
 
+
+    //获取所有的排行榜
+    private final static String ALL_RANKING_URL = "http://api.zhuishushenqi.com/ranking/gender";
+    public AllRankingBean  getAllRankingList(){
+        Request request = new Request.Builder().get().url(ALL_RANKING_URL).build();
+        Call call = client.newCall(request);
+        Response response;
+        try{
+            response = call.execute();
+            String data = response.body().string();
+            AllRankingBean allRankingBean = gson.fromJson(data,AllRankingBean.class);
+            return allRankingBean;
+        }catch (IOException e){
+            Log.d(TAG,"allRankingBean");
+            return null;
+        }
+    }
+
+    //获得某一书榜的具体内容
+    private final static String RANKING_LIST_BASE_URL = "http://api.zhuishushenqi.com/ranking/";
+    public RankBean getTotalRankBeanByRankId(String id){
+        String url = RANKING_LIST_BASE_URL + id;
+        Request request = new Request.Builder().get().url(url).build();
+        Call call = client.newCall(request);
+        Response response;
+        try{
+            response = call.execute();
+            String data = response.body().string();
+            RankBean rankBean = gson.fromJson(data,RankBean.class);
+            return rankBean;
+        }catch (IOException e){
+            Log.d(TAG,"rankBean");
+            return null;
+        }
     }
 
 //    class Bean<T>{

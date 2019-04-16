@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/rank_navigation_male"
+        android:icon="@drawable/male"
+        android:title="@string/male" />
+    <item
+        android:id="@+id/rank_navigation_female"
+        android:icon="@drawable/female"
+        android:title="@string/female" />
+    <item
+        android:id="@+id/rank_navigation_picture"
+        android:icon="@drawable/picture"
+        android:title="@string/picture" />
+    <item
+        android:id="@+id/rank_navigation_epub"
+        android:icon="@drawable/epub"
+        android:title="@string/epub" />
+
+</menu>

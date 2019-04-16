@@ -1,4 +1,4 @@
-package com.example.hp.readingyouself.fragment;
+package com.example.hp.readingyouself.mainFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +10,7 @@ import android.widget.LinearLayout;
 
 import com.example.hp.readingyouself.commentActivity.BookCommentActivity;
 import com.example.hp.readingyouself.commentActivity.ComprehensiveCommentActivity;
-import com.example.hp.readingyouself.commentActivity.CommentActivityThreeMenu;
 import com.example.hp.readingyouself.R;
-import com.example.hp.readingyouself.commentActivity.ComprehensiveCommentDetailActivity;
 import com.example.hp.readingyouself.commentActivity.OriginalCommentActivity;
 import com.example.hp.readingyouself.commentActivity.RecommendBookActivity;
 

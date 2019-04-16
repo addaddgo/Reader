@@ -17,12 +17,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import com.example.hp.readingyouself.fragment.BookShelfFragment;
-import com.example.hp.readingyouself.fragment.CategoryFragment;
-import com.example.hp.readingyouself.fragment.CommunityFragment;
-import com.example.hp.readingyouself.fragment.RankingFragment;
+import com.example.hp.readingyouself.mainFragment.BookShelfFragment;
+import com.example.hp.readingyouself.mainFragment.CategoryFragment;
+import com.example.hp.readingyouself.mainFragment.CommunityFragment;
+import com.example.hp.readingyouself.mainFragment.FindFragment;
+import com.example.hp.readingyouself.mainFragment.RankingFragment;
 import com.example.hp.readingyouself.readingDataSupport.DataConnector;
-import com.example.hp.readingyouself.readingDataSupport.dataForm.CategoryBean;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.Rank;
 import com.example.hp.readingyouself.readingDataSupport.DataGiveService;
 import com.example.hp.readingyouself.readingDataSupport.ListInCategoryActivity;
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements RankingFragment.O
                     replaceFragment(communityFragment);
                     return true;
                 case R.id.navigation_notifications:
-                    replaceFragment(rankingFragment);
+                    replaceFragment(findFragment);
                     return true;
             }
             return false;
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements RankingFragment.O
         //创建碎片
         bookShelfFragment = new BookShelfFragment();
         communityFragment = new CommunityFragment();
-        rankingFragment = new RankingFragment();
+        findFragment = new FindFragment();
 
         replaceFragment(bookShelfFragment);
 
@@ -95,15 +95,14 @@ public class MainActivity extends AppCompatActivity implements RankingFragment.O
     }
 
     //碎片控制
-    private FragmentTransaction transaction;
     private BookShelfFragment bookShelfFragment;
     private CommunityFragment communityFragment;
-    private RankingFragment rankingFragment;
+    private FindFragment findFragment;
 
     //切换碎片
     private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
-        transaction = fragmentManager.beginTransaction();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragment_layout,fragment);
         transaction.commit();
     }
@@ -137,9 +136,7 @@ public class MainActivity extends AppCompatActivity implements RankingFragment.O
             super.handleMessage(msg);
             switch (msg.what){
                 case BOOK_SHELF_FRAGMENT:break;
-                case RANKING_FRAGMENT:
-                    rankingFragment.reSetRank((Rank) msg.obj);
-                    break;
+                case RANKING_FRAGMENT: break;
                 case COMMUNITY_FRAGMENT:
                     break;
             }
