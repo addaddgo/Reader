@@ -1,6 +1,5 @@
-package com.example.hp.readingyouself.ReadingDataSupport.DataForm;
+package com.example.hp.readingyouself.readingDataSupport.dataForm;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryBean {

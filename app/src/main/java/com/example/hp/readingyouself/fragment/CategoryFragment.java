@@ -1,7 +1,6 @@
-package com.example.hp.readingyouself.Fragment;
+package com.example.hp.readingyouself.fragment;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -14,9 +13,8 @@ import android.widget.TextView;
 
 import com.example.hp.readingyouself.MaiActivityInterface;
 import com.example.hp.readingyouself.R;
-import com.example.hp.readingyouself.ReadingDataSupport.DataForm.CategoryBean;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.CategoryBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 

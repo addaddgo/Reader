@@ -1,4 +1,4 @@
-package com.example.hp.readingyouself.ReadingDataSupport;
+package com.example.hp.readingyouself.readingDataSupport;
 
 import android.app.Service;
 import android.content.Intent;

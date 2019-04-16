@@ -10,14 +10,13 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.bifan.txtreaderlib.bean.Chapter;
 import com.bifan.txtreaderlib.bean.TxtMsg;
 import com.bifan.txtreaderlib.interfaces.ILoadListener;
 import com.bifan.txtreaderlib.interfaces.IPageEdgeListener;
 import com.bifan.txtreaderlib.main.TxtReaderView;
-import com.example.hp.readingyouself.ReadingDataSupport.DataConnector;
-import com.example.hp.readingyouself.ReadingDataSupport.DataForm.BookChapter;
-import com.example.hp.readingyouself.ReadingDataSupport.DataGiveService;
+import com.example.hp.readingyouself.readingDataSupport.DataConnector;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.BookChapter;
+import com.example.hp.readingyouself.readingDataSupport.DataGiveService;
 
 import java.util.ArrayList;
 

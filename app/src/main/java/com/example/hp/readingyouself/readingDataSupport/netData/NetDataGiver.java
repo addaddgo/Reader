@@ -1,13 +1,17 @@
-package com.example.hp.readingyouself.ReadingDataSupport.NetData;
+package com.example.hp.readingyouself.readingDataSupport.netData;
 
 import android.util.Log;
 
-import com.example.hp.readingyouself.ReadingDataSupport.DataForm.BookChapter;
-import com.example.hp.readingyouself.ReadingDataSupport.DataForm.BookInCategoryBean;
-import com.example.hp.readingyouself.ReadingDataSupport.DataForm.BookInformation;
-import com.example.hp.readingyouself.ReadingDataSupport.DataForm.BookSummary;
-import com.example.hp.readingyouself.ReadingDataSupport.DataForm.CategoryBean;
-import com.example.hp.readingyouself.ReadingDataSupport.DataForm.Rank;
+import com.example.hp.readingyouself.commentActivity.BookCommentActivity;
+import com.example.hp.readingyouself.commentActivity.commentBean.BookCommentListBean;
+import com.example.hp.readingyouself.commentActivity.commentBean.ComprehensiveAndOriginalCommentBean;
+import com.example.hp.readingyouself.commentActivity.commentBean.RecommendBookListBean;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.BookChapter;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.BookInCategoryBean;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.BookInformation;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.BookSummary;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.CategoryBean;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.Rank;
 import com.google.gson.Gson;
 
 import okhttp3.Call;
@@ -289,4 +293,94 @@ public class NetDataGiver {
             return null;
         }
     }
+
+
+    private final static String COMPREHENSIVE_COMMENT_BASE_URL = "http://api.zhuishushenqi.com/post/by-block?";
+    public final static String COMPREHENSIVE_COMMENT_BLOCK_RAMBLE = "ramble";
+    public final static String ORIGINAL_COMMENT_ = "original";
+
+
+    //综合区
+    public ComprehensiveAndOriginalCommentBean getComprehensiveCommentList(String sort, int start, int limit, boolean distillate){
+        String url = COMPREHENSIVE_COMMENT_BASE_URL + "block=" + COMPREHENSIVE_COMMENT_BLOCK_RAMBLE + "&duration=all&sort=" + sort
+                + "&type=all&start=" + start + "&limit=" + limit + "&distillate+" + distillate;
+        return getComprehensiveOrOriginalCommentBean(url);
+    }
+    //原创区
+    public ComprehensiveAndOriginalCommentBean getOriginalCommentList(String sort, int start, int limit, boolean distillate){
+        String url = COMPREHENSIVE_COMMENT_BASE_URL + "block=" + ORIGINAL_COMMENT_ + "&duration=all&sort=" + sort
+                + "&type=all&start=" + start + "&limit=" + limit + "&distillate+" + distillate;
+        return getComprehensiveOrOriginalCommentBean(url);
+    }
+
+    private ComprehensiveAndOriginalCommentBean getComprehensiveOrOriginalCommentBean(String url){
+        Request request = new Request.Builder().get().url(url).build();
+        Call call = client.newCall(request);
+        Response response;
+        try{
+            response = call.execute();
+            String data = response.body().string();
+            ComprehensiveAndOriginalCommentBean commentBean = gson.fromJson(data,ComprehensiveAndOriginalCommentBean.class);
+            return commentBean;
+        }catch (IOException e){
+            e.printStackTrace();
+            Log.d(TAG,"comprehensiveCommentBean");
+            return null;
+        }
+    }
+
+
+    private final  static  String BOOK_COMMENT_BASE_URL = "http://api.zhuishushenqi.com/post/review?";
+
+    public BookCommentListBean getBookCommentBean(String sort, String type, int start, int limit, boolean distillate){
+        String url = BOOK_COMMENT_BASE_URL + "duration=all&sort=" + sort + "&type=" + type + "&start=" + start + "&limit=" + limit + "&distillate" + distillate;
+        Request request = new Request.Builder().get().url(url).build();
+        Call call = client.newCall(request);
+        Response response;
+        try{
+            response = call.execute();
+            String data = response.body().string();
+            BookCommentListBean commentBean = gson.fromJson(data,BookCommentListBean.class);
+            return commentBean;
+        }catch (IOException e){
+            e.printStackTrace();
+            Log.d(TAG,"BookCommentListBean");
+            return null;
+        }
+    }
+
+    public final static String RECOMMEND_BOOK_BASE_URL = "http://api.zhuishushenqi.com/post/help?duration=all";
+    public RecommendBookListBean getRecommendBookListBean(String sort,int start,int limit,boolean distillate){
+        String url = RECOMMEND_BOOK_BASE_URL + "&sort=" + sort + "&start=" + start + "&limit=" + limit + "&distillate=" + distillate;
+        Request request = new Request.Builder().get().url(url).build();
+        Call call = client.newCall(request);
+        Response response;
+        try{
+            response = call.execute();
+            String data = response.body().string();
+            RecommendBookListBean recommendBookListBean = gson.fromJson(data,RecommendBookListBean.class);
+            return recommendBookListBean;
+        }catch (IOException e){
+            Log.d(TAG,"recommendBookListBean");
+            return null;
+        }
+
+    }
+
+//    class Bean<T>{
+//        private T getBean(String url,T bean,String log){
+//            Request request = new Request.Builder().get().url(url).build();
+//            Call call = client.newCall(request);
+//            Response response;
+//            try{
+//                response = call.execute();
+//                String data = response.body().string();
+//                T t = gson.fromJson(data,T.class);
+//                return t;
+//            }catch (IOException e){
+//                Log.d(TAG,log);
+//                return null;
+//            }
+//        }
+//    }
 }

@@ -1,6 +1,6 @@
-package com.example.hp.readingyouself.ReadingDataSupport.LocData;
+package com.example.hp.readingyouself.readingDataSupport.locData;
 
-import com.example.hp.readingyouself.ReadingDataSupport.DataForm.Rank;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.Rank;
 
 public class LocDataGiver {
 

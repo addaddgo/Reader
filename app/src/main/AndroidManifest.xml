@@ -25,12 +25,19 @@
         <activity android:name=".ChapterActivity" />
 
         <service
-            android:name=".ReadingDataSupport.DataGiveService"
+            android:name=".readingDataSupport.DataGiveService"
             android:enabled="true"
             android:exported="true" />
 
         <activity android:name=".ChapterBodyActivity" />
-        <activity android:name=".ReadingDataSupport.ListInCategoryActivity"></activity>
+        <activity android:name=".readingDataSupport.ListInCategoryActivity" />
+        <activity android:name=".commentActivity.ComprehensiveCommentActivity" />
+        <activity android:name=".commentActivity.CommentActivityThreeMenu" />
+        <activity android:name=".commentActivity.ComprehensiveCommentDetailActivity" />
+        <activity android:name=".commentActivity.BookCommentActivity" />
+        <activity android:name=".commentActivity.BookCommentDetailActivity" />
+        <activity android:name=".commentActivity.RecommendBookActivity" />
+        <activity android:name=".commentActivity.OriginalCommentActivity"></activity>
     </application>
 
 </manifest>

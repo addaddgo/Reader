@@ -1,4 +1,4 @@
-package com.example.hp.readingyouself.ReadingDataSupport.DataForm;
+package com.example.hp.readingyouself.readingDataSupport.dataForm;
 
 public class BookInformation {
     private String ID;

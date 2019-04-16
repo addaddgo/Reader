@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragment.CommunityFragment">
+
+
+    <!-- 综合评论区 -->
+    <LinearLayout
+        android:id="@+id/community_comprehensive_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginStart="@dimen/community_icon_margin_start"
+            android:layout_width="@dimen/community_icon_size"
+            android:layout_height="@dimen/community_icon_size" />
+        <TextView
+            android:textSize="@dimen/text_size_big"
+            android:layout_marginStart="@dimen/community_icon_margin_start"
+            android:gravity="center"
+            android:text="@string/community_comprehensive_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <!-- 书评区 -->
+    <LinearLayout
+        android:id="@+id/community_book_comment"
+        android:layout_marginTop="@dimen/community_icon_margin_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginStart="@dimen/community_icon_margin_start"
+            android:layout_width="@dimen/community_icon_size"
+            android:layout_height="@dimen/community_icon_size" />
+        <TextView
+            android:textSize="@dimen/text_size_big"
+            android:layout_marginStart="@dimen/community_icon_margin_start"
+            android:gravity="center"
+            android:text="@string/community_book_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <!-- 书荒互助区 -->
+    <LinearLayout
+        android:id="@+id/community_recommend_book_comment"
+        android:layout_marginTop="@dimen/community_icon_margin_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_marginStart="@dimen/community_icon_margin_start"
+            android:layout_width="@dimen/community_icon_size"
+            android:layout_height="@dimen/community_icon_size" />
+        <TextView
+            android:textSize="@dimen/text_size_big"
+            android:layout_marginStart="@dimen/community_icon_margin_start"
+            android:gravity="center"
+            android:text="@string/community_recommend_book_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+
+    <!--&lt;!&ndash;女生区  &ndash;&gt;-->
+    <!--<LinearLayout-->
+        <!--android:id="@+id/community_girl_comment"-->
+        <!--android:layout_marginTop="@dimen/community_icon_margin_top"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+
+        <!--<ImageView-->
+            <!--android:layout_marginStart="@dimen/community_icon_margin_start"-->
+            <!--android:layout_width="@dimen/community_icon_size"-->
+            <!--android:layout_height="@dimen/community_icon_size" />-->
+        <!--<TextView-->
+            <!--android:textSize="@dimen/text_size_big"-->
+            <!--android:layout_marginStart="@dimen/community_icon_margin_start"-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/community_girl_comment"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent" />-->
+    <!--</LinearLayout>-->
+
+    <!-- 原创区 -->
+    <LinearLayout
+        android:id="@+id/community_original_comment"
+        android:layout_marginTop="@dimen/community_icon_margin_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginStart="@dimen/community_icon_margin_start"
+            android:layout_width="@dimen/community_icon_size"
+            android:layout_height="@dimen/community_icon_size" />
+        <TextView
+            android:textSize="@dimen/text_size_big"
+            android:layout_marginStart="@dimen/community_icon_margin_start"
+            android:gravity="center"
+            android:text="@string/community_original_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,4 +1,4 @@
-package com.example.hp.readingyouself.ReadingDataSupport;
+package com.example.hp.readingyouself.readingDataSupport;
 
 
 import android.os.Handler;
@@ -8,14 +8,17 @@ import android.os.Message;
 import com.example.hp.readingyouself.ChapterBodyActivity;
 import com.example.hp.readingyouself.MaiActivityInterface;
 import com.example.hp.readingyouself.ChapterActivity;
-import com.example.hp.readingyouself.ReadingDataSupport.DataForm.BookChapter;
-import com.example.hp.readingyouself.ReadingDataSupport.DataForm.BookInCategoryBean;
-import com.example.hp.readingyouself.ReadingDataSupport.DataForm.BookInformation;
-import com.example.hp.readingyouself.ReadingDataSupport.DataForm.BookSummary;
-import com.example.hp.readingyouself.ReadingDataSupport.DataForm.CategoryBean;
-import com.example.hp.readingyouself.ReadingDataSupport.DataForm.Rank;
-import com.example.hp.readingyouself.ReadingDataSupport.LocData.LocDataGiver;
-import com.example.hp.readingyouself.ReadingDataSupport.NetData.NetDataGiver;
+import com.example.hp.readingyouself.commentActivity.commentBean.BookCommentListBean;
+import com.example.hp.readingyouself.commentActivity.commentBean.RecommendBookListBean;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.BookChapter;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.BookInCategoryBean;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.BookInformation;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.BookSummary;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.CategoryBean;
+import com.example.hp.readingyouself.commentActivity.commentBean.ComprehensiveAndOriginalCommentBean;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.Rank;
+import com.example.hp.readingyouself.readingDataSupport.locData.LocDataGiver;
+import com.example.hp.readingyouself.readingDataSupport.netData.NetDataGiver;
 
 import java.util.ArrayList;
 
@@ -117,7 +120,7 @@ public class DataConnector {
                }
                if(workHandler != null){
                    Message message = workHandler.obtainMessage();
-                   message.what = MaiActivityInterface.RankingFragment;
+                   message.what = MaiActivityInterface.RANKING_FRAGMENT;
                    message.obj = rank;
                    workHandler.sendMessage(message);
                }
@@ -167,7 +170,7 @@ public class DataConnector {
                 Rank rank = netDataGiver.search(bookName);
                 if(rank != null){
                     Message message = workHandler.obtainMessage();
-                    message.what = MaiActivityInterface.RankingFragment;
+                    message.what = MaiActivityInterface.RANKING_FRAGMENT;
                     message.obj = rank;
                     workHandler.sendMessage(message);
                 }//TODO(6)返回本地,已经保存的信息
@@ -176,14 +179,14 @@ public class DataConnector {
     }
 
     //获取分类
-    public void sendCategory(){
+    public void sentCategory(){
         handler.post(new Runnable() {
             @Override
             public void run() {
                 CategoryBean categoryBean = netDataGiver.getLatestCategory();
                 if(categoryBean != null && workHandler != null){
                     Message message = workHandler.obtainMessage();
-                    message.what = MaiActivityInterface.CategoryFragment;
+                    message.what = MaiActivityInterface.COMMUNITY_FRAGMENT;
                     message.obj = categoryBean;
                     workHandler.sendMessage(message);
                 }//TODO(5)返回本地
@@ -203,6 +206,74 @@ public class DataConnector {
                     workHandler.sendMessage(message);
                 }else {
                     //TODO(6)从本地
+                }
+            }
+        });
+    }
+
+    //获得综合评论区列表
+    public void sentComprehensiveCommentList(final String sort,final int start,final int limit, final boolean distillate){
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                ComprehensiveAndOriginalCommentBean comprehensiveCommentBean = netDataGiver.getComprehensiveCommentList(sort,start,limit,distillate);
+                if(comprehensiveCommentBean == null){
+                    //
+                }else if (workHandler != null){
+                        Message message = workHandler.obtainMessage();
+                        message.obj = comprehensiveCommentBean;
+                        workHandler.sendMessage(message);
+                }
+            }
+        });
+    }
+
+    //原创区
+    public void sentOriginalCommentList(final String sort,final int start,final int limit, final boolean distillate){
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                ComprehensiveAndOriginalCommentBean comprehensiveCommentBean = netDataGiver.getOriginalCommentList(sort,start,limit,distillate);
+                if(comprehensiveCommentBean == null){
+                    //
+                }else if (workHandler != null){
+                    Message message = workHandler.obtainMessage();
+                    message.obj = comprehensiveCommentBean;
+                    workHandler.sendMessage(message);
+                }
+            }
+        });
+    }
+
+    //获取书评区
+    public void sendBookComment(final String sort, final String type, final int start, final int limit, final boolean distillate ){
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                BookCommentListBean bookCommentBean = netDataGiver.getBookCommentBean(sort,type,start,limit,distillate );
+                if(bookCommentBean == null){
+
+                }else if(workHandler != null){
+                    Message message = workHandler.obtainMessage();
+                    message.obj = bookCommentBean;
+                    workHandler.sendMessage(message);
+                }
+            }
+        });
+    }
+
+    //获得书荒区
+    public void sendRecommendBookListBean(final String sort, final int start, final int limit, final boolean distillate){
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                RecommendBookListBean recommendBookListBean = netDataGiver.getRecommendBookListBean(sort,start,limit,distillate);
+                if(recommendBookListBean == null){
+
+                }else if(workHandler != null){
+                    Message message = workHandler.obtainMessage();
+                    message.obj = recommendBookListBean;
+                    workHandler.sendMessage(message);
                 }
             }
         });

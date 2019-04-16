@@ -17,9 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.hp.readingyouself.ReadingDataSupport.DataConnector;
-import com.example.hp.readingyouself.ReadingDataSupport.DataForm.BookChapter;
-import com.example.hp.readingyouself.ReadingDataSupport.DataGiveService;
+import com.example.hp.readingyouself.readingDataSupport.DataConnector;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.BookChapter;
+import com.example.hp.readingyouself.readingDataSupport.DataGiveService;
 
 import java.util.ArrayList;
 
@@ -144,9 +144,11 @@ public class ChapterActivity extends AppCompatActivity {
     };
 
     class MyHandler extends Handler{
+
         public MyHandler(Looper looper) {
             super(looper);
         }
+
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -156,4 +158,5 @@ public class ChapterActivity extends AppCompatActivity {
             }
         }
     }
+
 }

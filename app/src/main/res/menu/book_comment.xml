@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/community_book_comment_value"
+        android:title="@string/community_comment_all">
+        <menu>
+            <group>
+                <item android:id="@+id/community_book_comment_all"
+                    android:title="@string/community_comment_all"/>
+                <item android:title="@string/community_comment_distillate"
+                    android:id="@+id/community_book_comment_distillate"/>
+            </group>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/community_book_comment_type"
+        android:title="@string/community_book_comment_type_all">
+        <menu>
+            <group>
+                <item android:id="@+id/community_book_comment_type_all"
+                    android:title="@string/community_book_comment_type_all"/>
+                <item android:id="@+id/community_book_comment_type_xhqh"
+                    android:title="@string/community_book_comment_type_xhqh"/>
+                <item android:id="@+id/community_book_comment_type_wxxx"
+                    android:title="@string/community_book_comment_type_wxxx"/>
+                <item android:id="@+id/community_book_comment_type_dsyn"
+                    android:title="@string/community_book_comment_type_dsyn"/>
+                <item android:id="@+id/community_book_comment_type_lsjs"
+                    android:title="@string/community_book_comment_type_lsjs"/>
+                <item android:id="@+id/community_book_comment_type_yxjj"
+                    android:title="@string/community_book_comment_type_yxjj"/>
+                <item android:id="@+id/community_book_comment_type_khly"
+                    android:title="@string/community_book_comment_type_khly"/>
+                <item android:id="@+id/community_book_comment_type_cyjk"
+                    android:title="@string/community_book_comment_type_cyjk"/>
+                <item android:id="@+id/community_book_comment_type_hmzc"
+                    android:title="@string/community_book_comment_type_hmzc"/>
+                <item android:id="@+id/community_book_comment_type_xdyq"
+                    android:title="@string/community_book_comment_type_xdyq"/>
+                <item android:id="@+id/community_book_comment_type_gdyq"
+                    android:title="@string/community_book_comment_type_gdyq"/>
+                <item android:id="@+id/community_book_comment_type_hxyq"
+                    android:title="@string/community_book_comment_type_hxyq"/>
+                <item android:id="@+id/community_book_comment_type_dmtr"
+                    android:title="@string/community_book_comment_type_dmtr"/>
+            </group>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/community_book_comment_sort"
+        android:title="@string/community_comment_sort_updated">
+        <menu>
+            <group android:checkableBehavior="all">
+                <item android:id="@+id/community_book_comment_sort_update"
+                    android:title="@string/community_comment_sort_updated"/>
+                <item android:id="@+id/community_book_comment_sort_created"
+                    android:title="@string/community_comment_sort_created"/>
+                <item android:id="@+id/community_book_comment_sort_most"
+                    android:title="@string/community_comment_sort_most"/>
+                <item android:id="@+id/community_book_comment_sort_most_helpful"
+                    android:title="@string/community_comment_sort_most_helpful"/>
+            </group>
+        </menu>
+    </item>
+
+</menu>

@@ -17,14 +17,15 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import com.example.hp.readingyouself.Fragment.BookShelfFragment;
-import com.example.hp.readingyouself.Fragment.CategoryFragment;
-import com.example.hp.readingyouself.Fragment.RankingFragment;
-import com.example.hp.readingyouself.ReadingDataSupport.DataConnector;
-import com.example.hp.readingyouself.ReadingDataSupport.DataForm.CategoryBean;
-import com.example.hp.readingyouself.ReadingDataSupport.DataForm.Rank;
-import com.example.hp.readingyouself.ReadingDataSupport.DataGiveService;
-import com.example.hp.readingyouself.ReadingDataSupport.ListInCategoryActivity;
+import com.example.hp.readingyouself.fragment.BookShelfFragment;
+import com.example.hp.readingyouself.fragment.CategoryFragment;
+import com.example.hp.readingyouself.fragment.CommunityFragment;
+import com.example.hp.readingyouself.fragment.RankingFragment;
+import com.example.hp.readingyouself.readingDataSupport.DataConnector;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.CategoryBean;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.Rank;
+import com.example.hp.readingyouself.readingDataSupport.DataGiveService;
+import com.example.hp.readingyouself.readingDataSupport.ListInCategoryActivity;
 
 public class MainActivity extends AppCompatActivity implements RankingFragment.OnMaiActivityInteractionListener,
         BookShelfFragment.OnMaiActivityInteractionListener,
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements RankingFragment.O
                     replaceFragment(bookShelfFragment);
                     return true;
                 case R.id.navigation_dashboard:
-                    replaceFragment(categoryFragment);
+                    replaceFragment(communityFragment);
                     return true;
                 case R.id.navigation_notifications:
                     replaceFragment(rankingFragment);
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements RankingFragment.O
 
         //创建碎片
         bookShelfFragment = new BookShelfFragment();
-        categoryFragment = new CategoryFragment();
+        communityFragment = new CommunityFragment();
         rankingFragment = new RankingFragment();
 
         replaceFragment(bookShelfFragment);
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements RankingFragment.O
     //碎片控制
     private FragmentTransaction transaction;
     private BookShelfFragment bookShelfFragment;
-    private CategoryFragment categoryFragment;
+    private CommunityFragment communityFragment;
     private RankingFragment rankingFragment;
 
     //切换碎片
@@ -135,12 +136,11 @@ public class MainActivity extends AppCompatActivity implements RankingFragment.O
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what){
-                case BookShelfFragment:break;
-                case RankingFragment:
+                case BOOK_SHELF_FRAGMENT:break;
+                case RANKING_FRAGMENT:
                     rankingFragment.reSetRank((Rank) msg.obj);
                     break;
-                case CategoryFragment:
-                    categoryFragment.resetCategory((CategoryBean)msg.obj);
+                case COMMUNITY_FRAGMENT:
                     break;
             }
         }
@@ -191,6 +191,6 @@ public class MainActivity extends AppCompatActivity implements RankingFragment.O
 
     @Override
     public void getAllCategory() {
-        dataConnector.sendCategory();
+        dataConnector.sentCategory();
     }
 }

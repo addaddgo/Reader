@@ -1,6 +1,4 @@
-package com.example.hp.readingyouself.ReadingDataSupport.DataForm;
-
-import java.util.ArrayList;
+package com.example.hp.readingyouself.readingDataSupport.dataForm;
 
 public class Rank {
     private String url;

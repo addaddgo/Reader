@@ -2,9 +2,9 @@ package com.example.hp.readingyouself;
 
 public interface MaiActivityInterface {
 
-    int BookShelfFragment = 1;
-    int RankingFragment = 2;
-    int CategoryFragment = 3;
+    int BOOK_SHELF_FRAGMENT = 1;
+    int RANKING_FRAGMENT = 2;
+    int COMMUNITY_FRAGMENT = 3;
     //启动阅读活动
 
     void startReadActivity(String bookID);

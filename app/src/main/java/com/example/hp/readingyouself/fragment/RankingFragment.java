@@ -1,4 +1,4 @@
-package com.example.hp.readingyouself.Fragment;
+package com.example.hp.readingyouself.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,9 +14,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.hp.readingyouself.R;
-import com.example.hp.readingyouself.ReadingDataSupport.DataForm.Rank;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.Rank;
 
-import  com.example.hp.readingyouself.ReadingDataSupport.DataConnector;
+import  com.example.hp.readingyouself.readingDataSupport.DataConnector;
 import com.example.hp.readingyouself.MaiActivityInterface;
 
 /**

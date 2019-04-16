@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/community_comment_value"
+        android:title="@string/community_comment_all">
+        <menu>
+            <group android:checkableBehavior="all">
+                <item android:title="@string/community_comment_all"
+                    android:id="@+id/community_usual_menu_all"/>
+                <item android:id="@+id/community_usual_menu_distillate"
+                    android:title="@string/community_comment_distillate"/>
+            </group>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/community_comment_sort"
+        android:title="@string/community_comment_sort_updated">
+        <menu>
+            <group android:checkableBehavior="all">
+                <item android:id="@+id/community_usual_menu_update"
+                android:title="@string/community_comment_sort_updated"/>
+                <item android:id="@+id/community_usual_menu_created"
+                    android:title="@string/community_comment_sort_created"/>
+                <item android:id="@+id/community_usual_menu_most"
+                    android:title="@string/community_comment_sort_most"/>
+            </group>
+        </menu>
+    </item>
+</menu>

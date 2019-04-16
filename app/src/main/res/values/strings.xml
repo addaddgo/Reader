@@ -1,5 +1,8 @@
 <resources>
 
+
+    <string name="empty_text">null</string>
+
     <!-- MainActivity-->
     <string name="app_name">ReadingYouself</string>
     <string name="book_shelf">书架</string>
@@ -27,5 +30,35 @@
 
     //CategoryFragment
     <string name="press">出版</string>
+
+    //community
+    <string name="community_comprehensive_comment">综合评论区</string>
+    <string name="community_book_comment">书评区</string>
+    <string name="community_recommend_book_comment">书荒互助区</string>
+    <string name="community_girl_comment">女生区</string>
+    <string name="community_original_comment">原创区</string>
+    <string name="community_comment_all">全部</string>
+    <string name="community_comment_distillate">精品</string>
+    <string name="community_comment_sort_updated">默认排序</string>
+    <string name="community_comment_sort_created">最新发布</string>
+    <string name="community_comment_sort_most">评论最多</string>
+    <string name="community_comment_sort_most_helpful">最有用的</string>
+
+
+    //bookComment
+    <string name="community_book_comment_type_all">全部类型</string>
+    <string name="community_book_comment_type_xhqh">玄幻奇幻</string>
+    <string name="community_book_comment_type_wxxx">武侠仙侠</string>
+    <string name="community_book_comment_type_dsyn">都市异能</string>
+    <string name="community_book_comment_type_lsjs">历史军事</string>
+    <string name="community_book_comment_type_yxjj">游戏竞技</string>
+    <string name="community_book_comment_type_khly">科幻灵异</string>
+    <string name="community_book_comment_type_cyjk">穿越架空</string>
+    <string name="community_book_comment_type_hmzc">豪门总裁</string>
+    <string name="community_book_comment_type_xdyq">现代言情</string>
+    <string name="community_book_comment_type_gdyq">古代言情</string>
+    <string name="community_book_comment_type_hxyq">幻想言情</string>
+    <string name="community_book_comment_type_dmtr">耽美同人</string>
+
 
 </resources>

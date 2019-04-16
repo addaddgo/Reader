@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".readingDataSupport.ListInCategoryActivity">
+    tools:context=".commentActivity.RecommendBookActivity">
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/list_in_category_recycler"
+        android:id="@+id/community_recommend_book_comment_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </android.support.v7.widget.RecyclerView>

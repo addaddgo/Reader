@@ -1,4 +1,4 @@
-package com.example.hp.readingyouself.ReadingDataSupport;
+package com.example.hp.readingyouself.readingDataSupport;
 
 import android.content.ComponentName;
 import android.content.Intent;
@@ -18,13 +18,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.hp.readingyouself.ChapterActivity;
-import com.example.hp.readingyouself.Fragment.RankingFragment;
-import com.example.hp.readingyouself.MainActivity;
 import com.example.hp.readingyouself.R;
-import com.example.hp.readingyouself.ReadingDataSupport.DataForm.BookInCategoryBean;
-import com.example.hp.readingyouself.ReadingDataSupport.DataForm.CategoryBean;
-import com.example.hp.readingyouself.ReadingDataSupport.DataForm.Rank;
-import com.example.hp.readingyouself.ReadingDataSupport.NetData.NetDataGiver;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.BookInCategoryBean;
+import com.example.hp.readingyouself.readingDataSupport.netData.NetDataGiver;
 
 public class ListInCategoryActivity extends AppCompatActivity {
 
