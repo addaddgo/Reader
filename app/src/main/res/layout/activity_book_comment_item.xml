@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/community_comment_book_name"
         android:textSize="@dimen/text_size_big"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/find_book_comment_width"
         android:layout_height="wrap_content" />
 
     <TextView
@@ -27,7 +27,7 @@
         app:layout_constraintStart_toEndOf="@+id/community_comment_book_image"
         android:id="@+id/community_comment_book_topic"
         android:textSize="@dimen/text_size_mid"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/find_book_comment_width"
         android:layout_height="wrap_content" />
 
 </android.support.constraint.ConstraintLayout>

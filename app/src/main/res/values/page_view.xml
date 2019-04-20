@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PageView">
+        <attr name="tagColor" format="color"/>
+        <attr name="searchColor" format="color"/>
+    </declare-styleable>
+</resources>

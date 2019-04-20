@@ -1,5 +1,7 @@
 package com.example.hp.readingyouself.findActivity;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -8,14 +10,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.hp.readingyouself.BaseActivity;
 import com.example.hp.readingyouself.R;
 import com.example.hp.readingyouself.commentActivity.commentBean.BookCommentListBean;
+import com.example.hp.readingyouself.readActivity.BookIntroductionActivity;
 import com.example.hp.readingyouself.readingDataSupport.DataConnector;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.BookInformationBean;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.RankBean;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class RankListActivity extends BaseActivity {
@@ -37,15 +43,15 @@ public class RankListActivity extends BaseActivity {
     }
 
     private RankBean rankBean;
+    private List<RankBean.RankingBean.BooksBean> booksBeanList;
+    private HashMap<String,Bitmap> stringBitmapHashMap;
 
     private class RecyclerRankingAdapter extends RecyclerView.Adapter<RecyclerRankingAdapter.HolderView>{
-
-        private List<RankBean.RankingBean.BooksBean> booksBeanList;
-
 
         @Override
         public void onBindViewHolder(@NonNull HolderView holder, int position) {
             RankBean.RankingBean.BooksBean bean = booksBeanList.get(position);
+            holder.imageView.setImageBitmap(stringBitmapHashMap.get(bean.getCover()));
             String author = getString(R.string.author) + bean.getAuthor();
             holder.author.setText(author);
             String bookName = getString(R.string.book_name) + bean.getTitle();
@@ -73,15 +79,9 @@ public class RankListActivity extends BaseActivity {
             }
         }
 
-        void reSetRank(List<RankBean.RankingBean.BooksBean> booksBeanList){
-            if(booksBeanList != null){
-                this.booksBeanList = booksBeanList;
-                this.notifyDataSetChanged();
-            }
-        }
-
         class HolderView extends RecyclerView.ViewHolder{
             String bookId;
+            ImageView imageView;
             TextView bookName;
             TextView author;
             TextView tag;
@@ -89,6 +89,7 @@ public class RankListActivity extends BaseActivity {
 
             HolderView(@NonNull View itemView) {
                 super(itemView);
+                imageView = itemView.findViewById(R.id.find_ranking_item_image);
                 bookName = itemView.findViewById(R.id.find_ranking_item_book_name);
                 author = itemView.findViewById(R.id.find_ranking_item_author);
                 shortIntroduction = itemView.findViewById(R.id.find_ranking_item_shortIntro);
@@ -97,11 +98,16 @@ public class RankListActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         if(bookId != null){
-                            //TODO 跳转到章节页面
+                            Intent intent = new Intent(getBaseContext(),BookIntroductionActivity.class);
+                            intent.putExtra(BookIntroductionActivity.BOOK_ID,bookId);
+                            startActivity(intent);
                         }
                     }
                 });
             }
+        }
+        void  reset(){
+            if(booksBeanList != null && stringBitmapHashMap != null &&stringBitmapHashMap.size() != 0)notifyDataSetChanged();
         }
     }
 
@@ -112,7 +118,16 @@ public class RankListActivity extends BaseActivity {
     protected void onHandleMessage(Message msg) {
         if(msg.obj instanceof RankBean){
             rankBean = (RankBean)msg.obj;
-            recyclerRankingAdapter.reSetRank(rankBean.getRanking().getBooks());
+            booksBeanList = rankBean.getRanking().getBooks();
+            String[] agents = new String[booksBeanList.size()];
+            for (int i = 0; i < agents.length; i++) {
+                agents[i] = booksBeanList.get(i).getCover();
+            }
+            dataConnector.sendCovers(agents);
+        }
+        if(msg.obj instanceof HashMap){
+            stringBitmapHashMap = (HashMap<String, Bitmap>) msg.obj;
+            recyclerRankingAdapter.reset();
         }
     }
 

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".readActivity.BookIntroductionActivity">
+
+    <ImageView
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/book_introduction_cover"
+        android:layout_width="@dimen/book_introduction_cover_width"
+        android:layout_height="@dimen/book_introduction_cover_height" />
+    <TextView
+        android:layout_marginStart="10dp"
+        android:textSize="@dimen/text_size_small"
+        app:layout_constraintStart_toEndOf="@id/book_introduction_cover"
+        android:id="@+id/book_introduction_digest"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/book_introduction_cover_height" />
+
+    <TextView
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="30dp"
+        android:id="@+id/book_introduction_follower"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/book_introduction_cover"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/text_size_mid"
+        android:text="@string/follower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/book_introduction_follower_number"
+        app:layout_constraintEnd_toEndOf="@id/book_introduction_follower"
+        app:layout_constraintStart_toStartOf="@id/book_introduction_follower"
+        app:layout_constraintTop_toBottomOf="@id/book_introduction_follower"
+        android:text="131047"
+        android:textSize="@dimen/text_size_small"
+        android:textColor="@color/colorAccent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:textSize="@dimen/text_size_mid"
+        android:layout_marginStart="30dp"
+        app:layout_constraintBaseline_toBaselineOf="@id/book_introduction_follower"
+        app:layout_constraintStart_toEndOf="@id/book_introduction_follower"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="@string/saver_percent"
+        android:id="@+id/book_introduction_saver_percent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/book_introduction_saver_percent_number"
+        app:layout_constraintEnd_toEndOf="@id/book_introduction_saver_percent"
+        app:layout_constraintStart_toStartOf="@id/book_introduction_saver_percent"
+        app:layout_constraintTop_toBottomOf="@id/book_introduction_saver_percent"
+        android:textSize="@dimen/text_size_small"
+        android:textColor="@color/colorAccent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:id="@+id/book_introduction_word_per"
+        android:layout_marginStart="30dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/text_size_mid"
+        android:text="@string/word_per_day"
+        app:layout_constraintBaseline_toBaselineOf="@id/book_introduction_saver_percent"
+        app:layout_constraintStart_toEndOf="@id/book_introduction_saver_percent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/book_introduction_word_per_number"
+        app:layout_constraintEnd_toEndOf="@id/book_introduction_word_per"
+        app:layout_constraintStart_toStartOf="@id/book_introduction_word_per"
+        app:layout_constraintTop_toBottomOf="@id/book_introduction_word_per"
+        android:textSize="@dimen/text_size_small"
+        android:textColor="@color/colorAccent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/book_introduction_follower"
+        android:textSize="@dimen/text_size_mid"
+        android:id="@+id/book_introduction_start_reading"
+        android:text="@string/start_reading"
+        android:textColor="@color/colorAccent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_marginStart="20dp"
+        app:layout_constraintBaseline_toBaselineOf="@id/book_introduction_start_reading"
+        app:layout_constraintStart_toEndOf="@id/book_introduction_start_reading"
+        android:textSize="@dimen/text_size_mid"
+        android:id="@+id/book_introduction_collect"
+        android:text="@string/collect"
+        android:textColor="@color/colorAccent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_marginStart="20dp"
+        app:layout_constraintBaseline_toBaselineOf="@id/book_introduction_collect"
+        app:layout_constraintStart_toEndOf="@id/book_introduction_collect"
+        android:textSize="@dimen/text_size_mid"
+        android:id="@+id/book_introduction_download"
+        android:text="@string/download"
+        android:textColor="@color/colorAccent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/book_introduction_start_reading"
+        android:textSize="@dimen/text_size_big"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="@string/short_introduction"
+        android:id="@+id/book_introduction_shortIntro_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/book_introduction_shortIntro_title"
+        android:textColor="@color/colorDimDark"
+        android:textSize="@dimen/text_size_mid"
+        android:layout_marginStart="20dp"
+        android:id="@+id/book_introduction_long"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/book_introduction_long"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="@string/hot_comment"
+        android:textSize="@dimen/text_size_big"
+        android:layout_width="wrap_content"
+        android:id="@+id/book_introduction_hot_comment_tittle"
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/book_introduction_hot_comment_tittle"
+        android:id="@+id/book_introduction_hot_comment_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
+
+</android.support.constraint.ConstraintLayout>

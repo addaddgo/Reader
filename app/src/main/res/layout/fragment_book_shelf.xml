@@ -3,12 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".mainFragment.BookShelfFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
     <TextView
+        android:textSize="@dimen/text_size_small"
+        android:text="https://juejin.im/entry/590833595c497d00584de0e1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent" />
 
 </FrameLayout>

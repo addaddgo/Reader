@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.example.hp.readingyouself.ChapterActivity;
 import com.example.hp.readingyouself.R;
-import com.example.hp.readingyouself.readingDataSupport.dataForm.BookInCategoryBean;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.BookInCategoryListBean;
 import com.example.hp.readingyouself.readingDataSupport.netData.NetDataGiver;
 
 public class ListInCategoryActivity extends AppCompatActivity {
@@ -47,9 +47,9 @@ public class ListInCategoryActivity extends AppCompatActivity {
     private RecyclerCategoryAdapter adapter;
 
     private class RecyclerCategoryAdapter extends RecyclerView.Adapter<ListInCategoryActivity.RecyclerCategoryAdapter.HolderView>{
-        private BookInCategoryBean bookInCategoryBean;
+        private BookInCategoryListBean bookInCategoryBean;
 
-        public RecyclerCategoryAdapter(BookInCategoryBean bookInCategoryBean) {
+        public RecyclerCategoryAdapter(BookInCategoryListBean bookInCategoryBean) {
             super();
             this.bookInCategoryBean = bookInCategoryBean;
         }
@@ -91,7 +91,7 @@ public class ListInCategoryActivity extends AppCompatActivity {
             }
         }
 
-        public void reSetRank(BookInCategoryBean bookInCategoryBean){
+        public void reSetRank(BookInCategoryListBean bookInCategoryBean){
             if(bookInCategoryBean != null){
                 this.bookInCategoryBean = bookInCategoryBean;
                 this.notifyDataSetChanged();
@@ -123,7 +123,7 @@ public class ListInCategoryActivity extends AppCompatActivity {
             DataGiveService.DataBinder dataBinder = (DataGiveService.DataBinder)service;
             dataConnector = dataBinder.getDataConnector();
             dataConnector.setWorkHandler(handler);
-            dataConnector.sentCategoryList(NetDataGiver.CATEGORY_TYPE_REPUTATION,major,minor,"0","10");
+            dataConnector.sentCategoryList(NetDataGiver.CATEGORY_TYPE_REPUTATION,major,minor,0,10);
         }
 
         @Override
@@ -155,7 +155,7 @@ public class ListInCategoryActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            adapter.reSetRank((BookInCategoryBean)msg.obj);
+            adapter.reSetRank((BookInCategoryListBean)msg.obj);
         }
     }
 }

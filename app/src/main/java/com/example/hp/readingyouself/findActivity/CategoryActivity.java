@@ -1,5 +1,6 @@
 package com.example.hp.readingyouself.findActivity;
 
+import android.content.Intent;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
@@ -172,6 +173,14 @@ public class CategoryActivity extends BaseActivity {
                 this.adapter = new MinsCategoryRecyclerAdapter(null,null);
                 recyclerView.setLayoutManager(linearLayoutManager);
                 recyclerView.setAdapter(adapter);
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getBaseContext(),CategoryListActivity.class);
+                        intent.putExtra(CategoryListActivity.MAJOR_TYPE,textView.getText());
+                        startActivity(intent);
+                    }
+                });
             }
         }
 
@@ -210,7 +219,10 @@ public class CategoryActivity extends BaseActivity {
                     this.textView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                         //TODO 获取列表
+                            Intent intent = new Intent(getBaseContext(),CategoryListActivity.class);
+                            intent.putExtra(CategoryListActivity.MAJOR_TYPE,major);
+                            intent.putExtra(CategoryListActivity.MINOR_TYPE,textView.getText().toString());
+                            startActivity(intent);
                         }
                     });
                 }

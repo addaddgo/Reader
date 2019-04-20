@@ -2,7 +2,7 @@ package com.example.hp.readingyouself.readingDataSupport.dataForm;
 
 import java.util.List;
 
-public class BookInCategoryBean {
+public class BookInCategoryListBean {
 
     /**
      * total : 16122

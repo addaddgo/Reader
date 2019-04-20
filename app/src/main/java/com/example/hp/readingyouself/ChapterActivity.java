@@ -112,6 +112,7 @@ public class ChapterActivity extends AppCompatActivity {
     }
 
 
+
     @Override
     protected void onStart() {
         super.onStart();

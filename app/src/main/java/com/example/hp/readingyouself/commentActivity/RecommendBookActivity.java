@@ -1,6 +1,7 @@
 package com.example.hp.readingyouself.commentActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import com.example.hp.readingyouself.commentActivity.commentBean.RecommendBookLi
 import com.example.hp.readingyouself.readingDataSupport.DataConnector;
 import com.example.hp.readingyouself.readingDataSupport.netData.NetConstantParameter;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class RecommendBookActivity extends BaseActivity {
@@ -32,17 +34,30 @@ public class RecommendBookActivity extends BaseActivity {
         RecyclerView recyclerView = findViewById(R.id.community_recommend_book_comment_recycler);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new RecyclerAdapter(null);
+        adapter = new RecyclerAdapter();
         recyclerView.setAdapter(adapter);
     }
 
     private RecyclerAdapter adapter;
     private DataConnector dataConnector;
+    private RecommendBookListBean recommendBookListBean;
+    private List<RecommendBookListBean.HelpsBean> helpBeans;
+    private HashMap<String,Bitmap> stringBitmapHashMap;
 
     @Override
     protected void onHandleMessage(Message msg) {
         if(msg.obj instanceof RecommendBookListBean){
-            adapter.resetBean(((RecommendBookListBean) msg.obj).getHelps());
+           recommendBookListBean = (RecommendBookListBean)msg.obj;
+           helpBeans = recommendBookListBean.getHelps();
+           String[] avatars = new String[helpBeans.size()];
+            for (int i = 0; i < avatars.length; i++) {
+                avatars[i] = helpBeans.get(i).getAuthor().getAvatar();
+            }
+            dataConnector.sendAuthorPortrait(avatars);
+        }
+        if(msg.obj instanceof HashMap){
+            stringBitmapHashMap = (HashMap<String, Bitmap>) msg.obj;
+            adapter.reset();
         }
     }
 
@@ -61,12 +76,6 @@ public class RecommendBookActivity extends BaseActivity {
 
     class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
 
-        private List<RecommendBookListBean.HelpsBean> helpBeans;
-
-        public RecyclerAdapter(List<RecommendBookListBean.HelpsBean> helpBeans) {
-            this.helpBeans = helpBeans;
-        }
-
         @Override
         public int getItemCount() {
             if(helpBeans == null)return 0;else return helpBeans.size();
@@ -77,14 +86,14 @@ public class RecommendBookActivity extends BaseActivity {
             holder.topic.setText(helpBeans.get(position).getTitle());
             holder.author.setText(helpBeans.get(position).getTitle());
             holder.helpID = helpBeans.get(position).get_id();
+            holder.imageView.setImageBitmap(stringBitmapHashMap.get(helpBeans.get(position).getAuthor().getAvatar()));
         }
 
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_book_comment_item,parent,false);
-            ViewHolder viewHolder = new ViewHolder(view);
-            return viewHolder;
+            return new ViewHolder(view);
         }
 
         class ViewHolder extends RecyclerView.ViewHolder{
@@ -100,17 +109,16 @@ public class RecommendBookActivity extends BaseActivity {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(getBaseContext(),BookCommentDetailActivity.class);
-                        intent.putExtra(BookCommentDetailActivity.REVIEW_ID,helpID);
+                        Intent intent = new Intent(getBaseContext(),RecommendBookDetailActivity.class);
+                        intent.putExtra(RecommendBookDetailActivity.HELP_ID,helpID);
                         startActivity(intent);
                     }
                 });
             }
         }
 
-        void resetBean(List<RecommendBookListBean.HelpsBean> helpBeans){
-            this.helpBeans = helpBeans;
-            notifyDataSetChanged();
+        void reset(){
+            if(helpBeans != null && stringBitmapHashMap != null && stringBitmapHashMap.size() != 0)notifyDataSetChanged();
         }
     }
 

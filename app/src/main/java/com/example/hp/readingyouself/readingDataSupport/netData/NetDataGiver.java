@@ -1,19 +1,29 @@
 package com.example.hp.readingyouself.readingDataSupport.netData;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
-import com.example.hp.readingyouself.commentActivity.BookCommentActivity;
 import com.example.hp.readingyouself.commentActivity.commentBean.BookCommentListBean;
+import com.example.hp.readingyouself.commentActivity.commentBean.BookCommentReviewBean;
+import com.example.hp.readingyouself.commentActivity.commentBean.BookRecommendBean;
 import com.example.hp.readingyouself.commentActivity.commentBean.ComprehensiveAndOriginalCommentBean;
+import com.example.hp.readingyouself.commentActivity.commentBean.ComprehensiveCommentBean;
 import com.example.hp.readingyouself.commentActivity.commentBean.RecommendBookListBean;
+import com.example.hp.readingyouself.readActivity.ReadingViewActivity;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.AllRankingBean;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.BookChapter;
-import com.example.hp.readingyouself.readingDataSupport.dataForm.BookInCategoryBean;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.BookInCategoryListBean;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.BookInformation;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.BookInformationBean;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.BookSummary;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.CategoryBean;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.ChapterBodyBean;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.ChapterListBean;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.Rank;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.RankBean;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.SearchBookBean;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.TheBookCommentListBean;
 import com.google.gson.Gson;
 
 import okhttp3.Call;
@@ -92,26 +102,31 @@ public class NetDataGiver {
     public static String COMMENT_SORT_CREATED = "created";
     public static String COMMENT_SORT_HELPFUL = "helpful";
     public static String COMMENT_SORT_COMMENT_COUNT = "comment-count";
-    //获取书评
-    //@parameter : 书对应的ID 评论分类排序 第一条评论对应整个评论的位置 返回的评论数目
-    public String[][]  getCommentByBook(String id,String sort ,int start,int limit){
-        String url = COMMENT_URL + "book=" + id + "&sort=" + sort + "&start=" + start +"&limit=" + limit;
+    //获取书评列表
+    //@parameter : 书对应的ID  第一条评论对应整个评论的位置 返回的评论数目
+    public TheBookCommentListBean  getCommentByBook(String id,int start,int limit){
+        String url = COMMENT_URL + "book=" + id + "&sort=" + COMMENT_SORT_DEFAULT + "&start=" + start +"&limit=" + limit;
         Request request = new Request.Builder().get().url(url).build();
         Call call = client.newCall(request);
         try {
             Response response = call.execute();
             String returnString = response.body().string();
-            String[][] authorContent = new String[2][limit];
-            int currentIndex = returnString.indexOf(NICK_NAME);
-            for (int i = 0; i < limit; i++) {
-                currentIndex = currentIndex + NICK_NAME.length();
-                authorContent[0][i] = returnString.substring(currentIndex,returnString.indexOf(DOUBLE_QUOTATION,currentIndex));
-                currentIndex = returnString.indexOf(COMMENT_CONTENT,currentIndex) + COMMENT_CONTENT.length();
-                authorContent[1][i] = returnString.substring(currentIndex,returnString.indexOf(DOUBLE_QUOTATION,currentIndex));
-                currentIndex = returnString.indexOf(NICK_NAME,currentIndex);
-            }
-            return authorContent;
+             return gson.fromJson(returnString,TheBookCommentListBean.class);
         }catch (IOException e){
+            return null;
+        }
+    }
+
+    private static String BOOK_COMMENT_REVIEW_BASIC_URL = "http://api.zhuishushenqi.com/post/review/";
+    public BookCommentReviewBean getBookCommentReviewBean(String reviewId){
+        String url = BOOK_COMMENT_REVIEW_BASIC_URL + reviewId;
+        Response response = getResponseByURL(url,"bookCommentReviewBean");
+        try{
+            String data = response.body().string();
+            return gson.fromJson(data,BookCommentReviewBean.class);
+        }catch (IOException e){
+            e.printStackTrace();
+            Log.d(TAG, "getBookCommentReviewBean");
             return null;
         }
     }
@@ -176,8 +191,22 @@ public class NetDataGiver {
         }
     }
 
+
+    public BookInformationBean getBookInformationBean(String id){
+        String url = BOOK_INFORMATION_URL + id;
+        Response response = getResponseByURL(url,"bookInformationBean");
+        try{
+            String data = response.body().string();
+            return gson.fromJson(data,BookInformationBean.class);
+        }catch (IOException e){
+            e.printStackTrace();
+            Log.d(TAG, "response.body");
+            return null;
+        }
+    }
+
     //根据书名搜索
-    private final static String SEARCH_URL = "http://novel.juhe.im/search?keyword=遮天";
+    private final static String SEARCH_URL = "http://novel.juhe.im/search?keyword=";
     public Rank search(String bookName){
         return getBooksBySearchAndRankingResponse(SEARCH_URL + bookName,COMMA);
     }
@@ -219,11 +248,29 @@ public class NetDataGiver {
         }
     }
 
+    //搜索书
+    private final static String SEARCH_BASIC_URL = "http://novel.juhe.im/search?keyword=";
+    public SearchBookBean getSearchBookBean(String book){
+        String url = SEARCH_BASIC_URL + book;
+        Response response = getResponseByURL(url,"searchbook");
+        if(response != null){
+            try {
+                String data = response.body().string();
+                return gson.fromJson(data,SearchBookBean.class);
+            }catch (IOException e){
+                e.printStackTrace();
+                Log.d(TAG, "getSearchBookBean");
+            }
+        }
+        return null;
+    }
+
     private static String BOOK_LIST_URL_START = "http://api.zhuishushenqi.com/mix-atoc/";
     private static String BOOK_LIST_URL_END = "?view=chapters ";
     private static String CHAPTERS_COUNT_1 = "\"chaptersCount1\":";
     private static String BOOK_ID = "bookId=";
     private static String CHAPTER_LINK_CORRECT = "http://chapter2.zhuishushenqi.com/chapter/http:%2F%2Fbook.my716.com%2FgetBooks.aspx%3Fmethod=content&bookId=";
+    private static String CHAPTER_LINK_MISTAKE = "http://book.my716.com/getBooks.aspx?method=content&bookId=";
 
     //获取书籍章节列表
     //@parameter书籍id
@@ -255,6 +302,25 @@ public class NetDataGiver {
         }
     }
 
+    //获取章节列表
+    public ChapterListBean getChapterListBean(String id){
+        Request request = new Request.Builder().get().url(BOOK_LIST_URL_START + id + BOOK_LIST_URL_END).build();
+        Call call = client.newCall(request);
+        try {
+            Response response = call.execute();
+            String returnString = response.body().string();
+            ChapterListBean chapterListBean =  gson.fromJson(returnString,ChapterListBean.class);
+            if(chapterListBean != null){
+                for (ChapterListBean.MixTocBean.ChaptersBean chaptersBean:chapterListBean.getMixToc().getChapters()) {
+                    chaptersBean.setLink(chaptersBean.getLink().replace(CHAPTER_LINK_MISTAKE,CHAPTER_LINK_CORRECT));
+                }
+            }
+            return chapterListBean;
+        }catch (IOException e){
+            return null;
+        }
+    }
+
     //获取章节内容
     //@parameter 章节url
     private static String BODY_START = "\"body\":\"";
@@ -271,6 +337,19 @@ public class NetDataGiver {
         }
     }
 
+    //获取章节内容
+    public ChapterBodyBean getChapterBodyBean(String url){
+        Request request = new Request.Builder().get().url(url).build();
+        Call call = client.newCall(request);
+        try {
+            Response response = call.execute();
+            String returnString = response.body().string();
+            return gson.fromJson(returnString,ChapterBodyBean.class);
+        }catch (IOException e){
+            return null;
+        }
+    }
+
 
     //返回由分类获得的书列表
     private final static String CATEGORY_GET_LIST_URL = "http://api.zhuishushenqi.com/book/by-categories?";
@@ -282,16 +361,16 @@ public class NetDataGiver {
     public final static String CATEGORY_TYPE_FEMALE = "male";
 
 
-    public BookInCategoryBean getBookInCategoryBean(String type,String major,String minor,String start,String limit){
+    public BookInCategoryListBean getBookInCategoryBean(String type, String major, String minor, int start, int limit){
         String url = CATEGORY_GET_LIST_URL + "type=" + type + "&major=" + major + "&minor=" + minor + "&start=" + start + "&limit=" + limit;
         Request request = new Request.Builder().get().url(url).build();
         Call call = client.newCall(request);
         try{
             Response response = call.execute();
-            BookInCategoryBean bookInCategoryBean = gson.fromJson(response.body().string(),BookInCategoryBean.class);
+            BookInCategoryListBean bookInCategoryBean = gson.fromJson(response.body().string(),BookInCategoryListBean.class);
             return bookInCategoryBean;
         }catch (IOException e){
-            Log.d(TAG,"无法拿到分类的对应信息");
+            Log.d(TAG,"bookInCategoryBean");
             return null;
         }
     }
@@ -308,6 +387,26 @@ public class NetDataGiver {
                 + "&type=all&start=" + start + "&limit=" + limit + "&distillate+" + distillate;
         return getComprehensiveOrOriginalCommentBean(url);
     }
+
+    //综合区或者原创区的评论详情
+    private static final String COMPREHENSIVE_COMMENT_POST_BASIC_URL = "http://api.zhuishushenqi.com/post/";
+    public ComprehensiveCommentBean getComprehensiveCommentBean(String postId){
+        String url = COMPREHENSIVE_COMMENT_POST_BASIC_URL + postId;
+        Response response = getResponseByURL(url,"ComprehensiveCommentBean");
+        try{
+            if(response != null){
+                String data = response.body().string();
+                ComprehensiveCommentBean comprehensiveCommentBean = gson.fromJson(data,ComprehensiveCommentBean.class);
+                return comprehensiveCommentBean;
+            }
+            return null;
+        }catch (IOException e){
+            e.printStackTrace();
+            Log.i(TAG, "getComprehensiveCommentBean");
+            return  null;
+        }
+    }
+
     //原创区
     public ComprehensiveAndOriginalCommentBean getOriginalCommentList(String sort, int start, int limit, boolean distillate){
         String url = COMPREHENSIVE_COMMENT_BASE_URL + "block=" + ORIGINAL_COMMENT_ + "&duration=all&sort=" + sort
@@ -333,7 +432,7 @@ public class NetDataGiver {
 
 
     private final  static  String BOOK_COMMENT_BASE_URL = "http://api.zhuishushenqi.com/post/review?";
-
+    //书荒互助区
     public BookCommentListBean getBookCommentBean(String sort, String type, int start, int limit, boolean distillate){
         String url = BOOK_COMMENT_BASE_URL + "duration=all&sort=" + sort + "&type=" + type + "&start=" + start + "&limit=" + limit + "&distillate" + distillate;
         Request request = new Request.Builder().get().url(url).build();
@@ -346,9 +445,30 @@ public class NetDataGiver {
             return commentBean;
         }catch (IOException e){
             e.printStackTrace();
-            Log.d(TAG,"BookCommentListBean");
+            Log.d(TAG,"TheBookCommentListBean");
             return null;
         }
+    }
+
+    //获取书荒互助区的详细评论
+    public BookRecommendBean getBookRecommendBean(String helpId){
+        String url = "http://api.zhuishushenqi.com/post/help/" + helpId;
+        Response response = getResponseByURL(url,"BookRecommendBean");
+        if(response != null){
+            try{
+                String data = response.body().string();
+                BookRecommendBean bookRecommendBean = gson.fromJson(data,BookRecommendBean.class);
+                if(bookRecommendBean != null){
+                    return bookRecommendBean;
+                }else {
+                    return null;
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+                Log.d(TAG, "getBookRecommendBean");
+            }
+        }
+        return  null;
     }
 
     public final static String RECOMMEND_BOOK_BASE_URL = "http://api.zhuishushenqi.com/post/help?duration=all";
@@ -403,6 +523,59 @@ public class NetDataGiver {
             return null;
         }
     }
+
+    //获取段子手的头像
+    private final static String AVATAR_BASIC_URL = "http://statics.zhuishushenqi.com";
+    public Bitmap getPortraitByAvatar(String authorAvatar){
+        String url = AVATAR_BASIC_URL + authorAvatar;
+        Request request = new Request.Builder().get().url(url).build();
+        Call call = client.newCall(request);
+        Response response;
+        try{
+            response = call.execute();
+            byte[] data = response.body().bytes();
+            return BitmapFactory.decodeByteArray(data,0,data.length);
+        }catch (IOException e){
+            e.printStackTrace();
+            Log.d(TAG,"Portrait");
+            return null;
+        }
+    }
+
+    //活动书的封面
+    private final static String BOOK_COVER_BASIC_URL = "http://statics.zhuishushenqi.com";
+    public Bitmap getBookCoverByAgent(String agent){
+        String url = BOOK_COVER_BASIC_URL + agent;
+        Response response =  getResponseByURL(url,"BookCover");
+        if(response != null){
+            try{
+                byte[] coverData = response.body().bytes();
+                return BitmapFactory.decodeByteArray(coverData,0,coverData.length);
+            }catch (IOException e){
+                e.printStackTrace();
+                Log.i(TAG,"cover,bitmap");
+                return null;
+            }
+        }else{
+            return null;
+        }
+    }
+
+    private Response getResponseByURL(String url,String information){
+        Request request = new Request.Builder().get().url(url).build();
+        Call call = client.newCall(request);
+        Response response;
+        try{
+            response = call.execute();
+            return response;
+        }catch (IOException e){
+            e.printStackTrace();
+            Log.i(TAG,information);
+            return null;
+        }
+    }
+
+
 
 //    class Bean<T>{
 //        private T getBean(String url,T bean,String log){

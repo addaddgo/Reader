@@ -12,13 +12,13 @@ import com.example.hp.readingyouself.readingDataSupport.netData.NetConstantParam
 
 public class OriginalCommentActivity extends ComprehensiveCommentActivity {
 
-    @Override
-    protected void onHandleMessage(Message msg) {
-        if(msg.obj instanceof ComprehensiveAndOriginalCommentBean){
-            bean = (ComprehensiveAndOriginalCommentBean)msg.obj;
-            recyclerAdapter.resetPosts(bean.getPosts());
-        }
-    }
+//    @Override
+//    protected void onHandleMessage(Message msg) {
+//        if(msg.obj instanceof ComprehensiveAndOriginalCommentBean){
+//            bean = (ComprehensiveAndOriginalCommentBean)msg.obj;
+//            recyclerAdapter.resetPosts();
+//        }
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

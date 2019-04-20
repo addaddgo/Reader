@@ -1,6 +1,7 @@
 package com.example.hp.readingyouself.commentActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -20,6 +21,8 @@ import com.example.hp.readingyouself.commentActivity.commentBean.ComprehensiveAn
 import com.example.hp.readingyouself.readingDataSupport.DataConnector;
 import com.example.hp.readingyouself.readingDataSupport.netData.NetConstantParameter;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ComprehensiveCommentActivity extends BaseActivity {
@@ -31,20 +34,30 @@ public class ComprehensiveCommentActivity extends BaseActivity {
         RecyclerView recyclerView = findViewById(R.id.community_comprehensive_activity_recycler);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerAdapter = new RecyclerAdapter(null);
+        recyclerAdapter = new RecyclerAdapter();
         recyclerView.setAdapter(recyclerAdapter);
     }
 
     protected RecyclerAdapter recyclerAdapter;
     protected ComprehensiveAndOriginalCommentBean bean;
+    protected List<ComprehensiveAndOriginalCommentBean.PostsBean>  postList;
     protected DataConnector dataConnector;
-
+    protected HashMap<String,Bitmap> stringBitmapHashMap;
 
     @Override
     protected void onHandleMessage(Message msg) {
         if(msg.obj instanceof  ComprehensiveAndOriginalCommentBean){
             bean = (ComprehensiveAndOriginalCommentBean)msg.obj;
-            recyclerAdapter.resetPosts(bean.getPosts());
+            postList = bean.getPosts();
+            String[] avatars = new String[postList.size()];
+            for (int i = 0; i < avatars.length; i++) {
+                avatars[i] = postList.get(i).getAuthor().getAvatar();
+            }
+            dataConnector.sendAuthorPortrait(avatars);
+        }
+        if(msg.obj instanceof HashMap){
+            stringBitmapHashMap = (HashMap<String,Bitmap>)msg.obj;
+            recyclerAdapter.resetPosts();
         }
     }
 
@@ -64,16 +77,10 @@ public class ComprehensiveCommentActivity extends BaseActivity {
 
     class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
 
-        private List<ComprehensiveAndOriginalCommentBean.PostsBean> posts;
-
-        RecyclerAdapter(List<ComprehensiveAndOriginalCommentBean.PostsBean> posts) {
-            this.posts = posts;
-        }
-
         @Override
         public int getItemCount() {
-            if(posts == null) return 0;
-            else return  posts.size();
+            if(postList == null) return 0;
+            else return  postList.size();
         }
 
 
@@ -81,19 +88,18 @@ public class ComprehensiveCommentActivity extends BaseActivity {
         @Override
         public RecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(getBaseContext()).inflate(R.layout.activity_comprehensive_comment_item,parent,false);
-            ViewHolder viewHolder = new ViewHolder(view);
-            return viewHolder;
+            return new ViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerAdapter.ViewHolder holder, int position) {
-            holder.author.setText(posts.get(position).getAuthor().getNickname());
-            holder.topic.setText(posts.get(position).getTitle());
-            holder.topicId = posts.get(position).get_id();
+            holder.author.setText(postList.get(position).getAuthor().getNickname());
+            holder.topic.setText(postList.get(position).getTitle());
+            holder.topicId = postList.get(position).get_id();
+            holder.imageView.setImageBitmap(stringBitmapHashMap.get(postList.get(position).getAuthor().getAvatar()));
         }
-        void resetPosts(List<ComprehensiveAndOriginalCommentBean.PostsBean> posts){
-            this.posts = posts;
-            notifyDataSetChanged();
+        void resetPosts(){
+            if(postList != null && stringBitmapHashMap != null && stringBitmapHashMap.size() != 0)notifyDataSetChanged();
         }
 
         class ViewHolder extends RecyclerView.ViewHolder{
@@ -110,7 +116,7 @@ public class ComprehensiveCommentActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(getBaseContext(),ComprehensiveCommentDetailActivity.class);
-                        intent.putExtra(ComprehensiveCommentDetailActivity.DISCUSSION_IS,topicId);
+                        intent.putExtra(ComprehensiveCommentDetailActivity.POST_ID,topicId);
                         startActivity(intent);
                     }
                 });

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/category_book_type_hot"
+        android:title="@string/category_type_hot"/>
+    <item
+        android:title="@string/category_type_new"
+        android:id="@+id/category_book_type_new"/>
+    <item
+        android:id="@+id/category_book_type_reputation"
+        android:title="@string/category_type_reputation"/>
+    <item
+        android:title="@string/category_type_over"
+        android:id="@+id/category_book_type_over"/>
+</menu>

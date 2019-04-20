@@ -1,6 +1,7 @@
 package com.example.hp.readingyouself.commentActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import com.example.hp.readingyouself.commentActivity.commentBean.BookCommentList
 import com.example.hp.readingyouself.readingDataSupport.DataConnector;
 import com.example.hp.readingyouself.readingDataSupport.netData.NetConstantParameter;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class BookCommentActivity extends BaseActivity {
@@ -31,7 +33,7 @@ public class BookCommentActivity extends BaseActivity {
         RecyclerView recyclerView = findViewById(R.id.community_book_comment_recycler);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new RecyclerAdapter(null);
+        adapter = new RecyclerAdapter();
         recyclerView.setAdapter(adapter);
     }
 
@@ -39,12 +41,6 @@ public class BookCommentActivity extends BaseActivity {
     private DataConnector dataConnector;
 
     class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
-
-        private List<BookCommentListBean.ReviewsBean> reviewsBeans;
-
-        public RecyclerAdapter(List<BookCommentListBean.ReviewsBean> reviewsBeans) {
-            this.reviewsBeans = reviewsBeans;
-        }
 
         @Override
         public int getItemCount() {
@@ -56,14 +52,14 @@ public class BookCommentActivity extends BaseActivity {
             holder.topic.setText(reviewsBeans.get(position).getTitle());
             holder.name.setText(reviewsBeans.get(position).getBook().getTitle());
             holder.reviewID = reviewsBeans.get(position).get_id();
+            holder.imageView.setImageBitmap(stringBitmapHashMap.get(reviewsBeans.get(position).getBook().getCover()));
         }
 
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_book_comment_item,parent,false);
-            ViewHolder viewHolder = new ViewHolder(view);
-            return viewHolder;
+            View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_book_comment_item, parent, false);
+          return   new ViewHolder(view);
         }
 
         class ViewHolder extends RecyclerView.ViewHolder{
@@ -87,15 +83,29 @@ public class BookCommentActivity extends BaseActivity {
             }
         }
 
-        void resetBean(List<BookCommentListBean.ReviewsBean> reviewsBeans){
-            this.reviewsBeans = reviewsBeans;
-            notifyDataSetChanged();
+        void reset(){
+            if(stringBitmapHashMap != null && reviewsBeans != null && stringBitmapHashMap.size() != 0)notifyDataSetChanged();
         }
     }
+
+    private List<BookCommentListBean.ReviewsBean> reviewsBeans;
+    private BookCommentListBean bookCommentListBean;
+    private HashMap<String,Bitmap> stringBitmapHashMap;
+
     @Override
     protected void onHandleMessage(Message msg) {
          if(msg.obj instanceof BookCommentListBean){
-             adapter.resetBean(((BookCommentListBean) msg.obj).getReviews());
+             bookCommentListBean = (BookCommentListBean)msg.obj;
+             reviewsBeans = bookCommentListBean.getReviews();
+             String[] agents = new String[reviewsBeans.size()];
+             for (int i = 0; i <agents.length;i++) {
+                 agents[i] = reviewsBeans.get(i).getBook().getCover();
+             }
+             dataConnector.sendCovers(agents);
+         }
+         if(msg.obj instanceof HashMap){
+             stringBitmapHashMap = (HashMap<String,Bitmap>)msg.obj;
+             adapter.reset();
          }
     }
 

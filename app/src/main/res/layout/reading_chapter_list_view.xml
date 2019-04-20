@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--<Button-->
+        <!--android:id="@+id/reading_chapter_list_back"-->
+        <!--android:background="@color/colorYellow"-->
+        <!--android:layout_weight="1"-->
+        <!--android:text="@string/from_last_reading_activity"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:textSize="@dimen/text_size_big"/>-->
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/reading_chapter_list_recycler"
+        android:background="@color/colorYellow">
+    </android.support.v7.widget.RecyclerView>
+
+    <!--<Button-->
+        <!--android:id="@+id/reading_chapter_list_collect"-->
+        <!--android:background="@color/colorYellow"-->
+        <!--android:text="@string/collect_chapter_activity"-->
+        <!--android:textSize="@dimen/text_size_big"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
+
+</android.support.constraint.ConstraintLayout>

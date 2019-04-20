@@ -3,12 +3,15 @@ package com.example.hp.readingyouself;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Bitmap;
+import android.graphics.ColorSpace;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -16,18 +19,29 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.webkit.HttpAuthHandler;
 
 import com.example.hp.readingyouself.mainFragment.BookShelfFragment;
 import com.example.hp.readingyouself.mainFragment.CategoryFragment;
 import com.example.hp.readingyouself.mainFragment.CommunityFragment;
 import com.example.hp.readingyouself.mainFragment.FindFragment;
 import com.example.hp.readingyouself.mainFragment.RankingFragment;
+import com.example.hp.readingyouself.mainFragment.SearchFragment;
+import com.example.hp.readingyouself.readActivity.ReadingViewActivity;
 import com.example.hp.readingyouself.readingDataSupport.DataConnector;
-import com.example.hp.readingyouself.readingDataSupport.dataForm.Rank;
 import com.example.hp.readingyouself.readingDataSupport.DataGiveService;
 import com.example.hp.readingyouself.readingDataSupport.ListInCategoryActivity;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.SearchBookBean;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.SearchLog;
 
-public class MainActivity extends AppCompatActivity implements RankingFragment.OnMaiActivityInteractionListener,
+import org.litepal.crud.DataSupport;
+import org.litepal.tablemanager.Connector;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements SearchFragment.SearchFragmentInter,
         BookShelfFragment.OnMaiActivityInteractionListener,
         CategoryFragment.OnMaiActivityInteractionListener{
 
@@ -40,12 +54,19 @@ public class MainActivity extends AppCompatActivity implements RankingFragment.O
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     replaceFragment(bookShelfFragment);
+                    currentFragment = BOOK_SHELF_FRAGMENT;
                     return true;
                 case R.id.navigation_dashboard:
+                    currentFragment = CATEGORY_FRAGMENT;
                     replaceFragment(communityFragment);
                     return true;
                 case R.id.navigation_notifications:
+                    currentFragment = RANKING_FRAGMENT;
                     replaceFragment(findFragment);
+                    return true;
+                case R.id.navigation_search:
+                    currentFragment = SEARCH_FRAGMENT;
+                    replaceFragment(searchFragment);
                     return true;
             }
             return false;
@@ -65,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements RankingFragment.O
         bookShelfFragment = new BookShelfFragment();
         communityFragment = new CommunityFragment();
         findFragment = new FindFragment();
+        searchFragment = new SearchFragment();
 
         replaceFragment(bookShelfFragment);
 
@@ -72,6 +94,11 @@ public class MainActivity extends AppCompatActivity implements RankingFragment.O
 
         Intent intent = new Intent(this,DataGiveService.class);
         startService(intent);
+//        Intent intent1 = new Intent(this,ReadingViewActivity.class);
+//        intent1.putExtra(ReadingViewActivity.CHAPTER_BODY_URL,"http://chapter2.zhuishushenqi.com/chapter/http:%2F%2Fbook.my716.com%2FgetBooks.aspx%3Fmethod=content&bookId=633074&chapterFile=U_753547_201607012243065574_6770_1.txt");
+//        intent1.putExtra(ReadingViewActivity.BOOK_ID,"5569ba444127a49f1fa99d29");
+//        intent1.putExtra(ReadingViewActivity.CHAPTER_NAME,"第一个章");
+//        startActivity(intent1);
     }
 
     @Override
@@ -98,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements RankingFragment.O
     private BookShelfFragment bookShelfFragment;
     private CommunityFragment communityFragment;
     private FindFragment findFragment;
+    private SearchFragment searchFragment;
 
     //切换碎片
     private void replaceFragment(Fragment fragment){
@@ -124,8 +152,9 @@ public class MainActivity extends AppCompatActivity implements RankingFragment.O
     };
 
     private DataConnector dataConnector;
-
     private MyHandler handler;
+    private int currentFragment;
+
 
      class MyHandler extends Handler{
          MyHandler(Looper looper) {
@@ -134,11 +163,13 @@ public class MainActivity extends AppCompatActivity implements RankingFragment.O
          @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
-                case BOOK_SHELF_FRAGMENT:break;
-                case RANKING_FRAGMENT: break;
-                case COMMUNITY_FRAGMENT:
+            switch (currentFragment){
+                case BOOK_SHELF_FRAGMENT:
                     break;
+                case SEARCH_FRAGMENT:
+
+                    break;
+
             }
         }
     }
@@ -160,22 +191,10 @@ public class MainActivity extends AppCompatActivity implements RankingFragment.O
         startActivity(intent);
     }
 
-    //RankingFragment
-
     @Override
-    public void getRank(int rankType) {
-        if(dataConnector != null){
-            dataConnector.sentRankToMainThread(rankType);
-        }
+    public List<SearchLog> giveSearchLog() {
+         return dataConnector.getSearchLog();
     }
-
-    @Override
-    public void getRankBySearch(String string) {
-        dataConnector.senRankingBySearch(string);
-    }
-
-    //BookShelfFragment
-
 
     @Override
     public void onFragmentInteraction(Uri uri) {

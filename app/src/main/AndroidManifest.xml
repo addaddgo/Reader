@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name="org.litepal.LitePalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -40,7 +41,12 @@
         <activity android:name=".commentActivity.OriginalCommentActivity" />
         <activity android:name=".findActivity.CategoryActivity" />
         <activity android:name=".findActivity.RankingActivity" />
-        <activity android:name=".findActivity.RankListActivity"></activity>
+        <activity android:name=".findActivity.RankListActivity" />
+        <activity android:name=".findActivity.CategoryListActivity" />
+        <activity android:name=".readActivity.ReadingViewActivity" />
+        <activity android:name=".readActivity.BookIntroductionActivity" />
+        <activity android:name=".commentActivity.RecommendBookDetailActivity" />
+        <activity android:name=".searchActivity.SearchActivity"></activity>
     </application>
 
 </manifest>
