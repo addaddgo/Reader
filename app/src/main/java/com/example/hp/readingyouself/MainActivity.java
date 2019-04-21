@@ -31,6 +31,7 @@ import com.example.hp.readingyouself.readActivity.ReadingViewActivity;
 import com.example.hp.readingyouself.readingDataSupport.DataConnector;
 import com.example.hp.readingyouself.readingDataSupport.DataGiveService;
 import com.example.hp.readingyouself.readingDataSupport.ListInCategoryActivity;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.BookShelfBook;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.SearchBookBean;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.SearchLog;
 
@@ -94,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.Se
 
         Intent intent = new Intent(this,DataGiveService.class);
         startService(intent);
+        bindService(intent,serviceConnection,BIND_AUTO_CREATE);
 //        Intent intent1 = new Intent(this,ReadingViewActivity.class);
 //        intent1.putExtra(ReadingViewActivity.CHAPTER_BODY_URL,"http://chapter2.zhuishushenqi.com/chapter/http:%2F%2Fbook.my716.com%2FgetBooks.aspx%3Fmethod=content&bookId=633074&chapterFile=U_753547_201607012243065574_6770_1.txt");
 //        intent1.putExtra(ReadingViewActivity.BOOK_ID,"5569ba444127a49f1fa99d29");
@@ -101,22 +103,11 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.Se
 //        startActivity(intent1);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Intent intent = new Intent(this,DataGiveService.class);
-        bindService(intent,serviceConnection,BIND_AUTO_CREATE);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        unbindService(serviceConnection);
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        unbindService(serviceConnection);
         Intent intent = new Intent(this,DataGiveService.class);
         stopService(intent);
     }
@@ -142,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.Se
             DataGiveService.DataBinder dataBinder = (DataGiveService.DataBinder)service;
             dataConnector = dataBinder.getDataConnector();
             dataConnector.setWorkHandler(handler);
+            bookShelfFragment.reStart();
         }
 
         @Override
@@ -197,11 +189,12 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.Se
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
-
+    public List<BookShelfBook> getBookShelf() {
+         if(dataConnector != null){
+             return dataConnector.getBookShelfBooks();
+         }
+       return null;
     }
-
-
     //CategoryFragment
 
 

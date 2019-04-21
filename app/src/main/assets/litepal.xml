@@ -4,5 +4,8 @@
     <version value="1"/>
     <list>
         <mapping class="com.example.hp.readingyouself.readingDataSupport.dataForm.SearchLog"/>
+        <mapping class="com.example.hp.readingyouself.readingDataSupport.dataForm.BookShelfBook"/>
+        <mapping class="com.example.hp.readingyouself.readingDataSupport.dataForm.ChapterBodySaver"/>
+        <mapping class="com.example.hp.readingyouself.readingDataSupport.dataForm.ChapterListBean"/>
     </list>
 </litepal>

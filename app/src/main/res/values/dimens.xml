@@ -35,6 +35,10 @@
     <dimen name="book_introduction_cover_width">50dp</dimen>
     <dimen name="book_introduction_cover_height">60dp</dimen>
 
+    //bookshelf
+    <dimen name="book_shelf_book_cover_width">80dp</dimen>
+    <dimen name="book_shelf_book_cover_height">92dp</dimen>
+
 
 
 </resources>

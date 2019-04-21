@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
+import android.util.Log;
 
 import com.example.hp.readingyouself.ChapterBodyActivity;
 import com.example.hp.readingyouself.MaiActivityInterface;
@@ -20,10 +21,12 @@ import com.example.hp.readingyouself.readingDataSupport.dataForm.BookChapter;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.BookInCategoryListBean;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.BookInformation;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.BookInformationBean;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.BookShelfBook;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.BookSummary;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.CategoryBean;
 import com.example.hp.readingyouself.commentActivity.commentBean.ComprehensiveAndOriginalCommentBean;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.ChapterBodyBean;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.ChapterBodySaver;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.ChapterListBean;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.Rank;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.RankBean;
@@ -166,12 +169,12 @@ public class DataConnector {
             @Override
             public void run() {
                 String string = netDataGiver.getBodyByChapterUrl(urlChapter);
-                //TODO(3)如何保存body
                 if (string != null) {
                     Message message = workHandler.obtainMessage();
                     message.what = ChapterBodyActivity.CHAPTER_BODY;
                     message.obj = string;
                     workHandler.sendMessage(message);
+                }else{
                 }
             }
         });
@@ -376,13 +379,18 @@ public class DataConnector {
         });
     }
 
+
+    //获取章节
     public void sendChapterBodyBean(final String url) {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                ChapterBodyBean chapterBodyBean = netDataGiver.getChapterBodyBean(url);
+                ChapterBodyBean chapterBodyBean = locDataGiver.getChapterBodyBean(url);
                 if (chapterBodyBean == null) {
-                    //本地
+                    chapterBodyBean = netDataGiver.getChapterBodyBean(url);
+                    if(chapterBodyBean != null){
+                        sendObject(chapterBodyBean);
+                    }
                 } else if (workHandler != null) {
                     sendObject(chapterBodyBean);
                 }
@@ -390,13 +398,17 @@ public class DataConnector {
         });
     }
 
+    //获取章节目录
     public void sendChapterListByBean(final String id) {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                ChapterListBean chapterListBean = netDataGiver.getChapterListBean(id);
+                ChapterListBean chapterListBean = locDataGiver.getChapterListBodyBean(id);
                 if (chapterListBean == null) {
-
+                    chapterListBean = netDataGiver.getChapterListBean(id);
+                    if(chapterListBean != null){
+                        sendObject(chapterListBean);
+                    }
                 } else if (workHandler != null) {
                     sendObject(chapterListBean);
                 }
@@ -451,9 +463,7 @@ public class DataConnector {
             @Override
             public void run() {
                 TheBookCommentListBean theBookCommentListBean = netDataGiver.getCommentByBook(id, start, limit);
-                if (theBookCommentListBean == null) {
-
-                } else {
+                if (theBookCommentListBean != null) {
                     sendObject(theBookCommentListBean);
                 }
             }
@@ -465,9 +475,12 @@ public class DataConnector {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                BookInformationBean bookInformationBean = netDataGiver.getBookInformationBean(id);
+                BookInformationBean bookInformationBean = locDataGiver.getBookInformationBean(id);
                 if (bookInformationBean == null) {
-
+                    bookInformationBean = netDataGiver.getBookInformationBean(id);
+                    if(bookInformationBean != null){
+                        sendObject(bookInformationBean);
+                    }
                 } else {
                     sendObject(bookInformationBean);
                 }
@@ -496,6 +509,54 @@ public class DataConnector {
     //获得搜索记录
     public List<SearchLog> getSearchLog(){
         return locDataGiver.getSearchLog();
+    }
+
+    //获取书架上的书
+    public List<BookShelfBook> getBookShelfBooks(){
+        return locDataGiver.getBookShelfBooks();
+    }
+
+    //删除书架上的书，并删除其所有数据
+    public void removeShelfBook(String bookId){
+        locDataGiver.deleteShelfBook(bookId);
+    }
+
+    //下载书
+    public void downloadBook(final String bookId){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ChapterListBean chapterListBean = netDataGiver.getChapterListBean(bookId);
+                chapterListBean.save();
+                List<ChapterListBean.MixTocBean.ChaptersBean> chaptersBeans = chapterListBean.getMixToc().getChapters();
+                int size = chaptersBeans.size();
+                boolean successful = true;
+                for (int i = 0;i < size ;i++){
+                    ChapterBodyBean chapterBodyBean = null;
+                    int times = 0;
+                    boolean flag = true;
+                    do {
+                        times++;
+                        if(times > 20){
+                            flag = false;
+                            break;
+                        }
+                        chapterBodyBean = locDataGiver.getChapterBodyBean(chaptersBeans.get(i).getLink());
+                        if(chapterBodyBean == null){
+                            chapterBodyBean = netDataGiver.getChapterBodyBean(chaptersBeans.get(i).getLink());
+                        }
+                    }while (chapterBodyBean == null);
+                    if(flag){
+                        ChapterBodySaver chapterBodySaver = new ChapterBodySaver(bookId,chapterBodyBean,chaptersBeans.get(i).getTitle(),i,chaptersBeans.get(i).getLink());
+                        chapterBodySaver.save();
+                    }else{
+                        successful = false;
+                        break;
+                    }
+                }
+                if(successful)sendObject(true);else sendObject(false);
+            }
+        }).start();
     }
 
     public ArrayList<BookChapter> getCurrentBookChapters() {

@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.hp.readingyouself.BaseActivity;
 import com.example.hp.readingyouself.R;
@@ -23,14 +24,19 @@ import com.example.hp.readingyouself.commentActivity.commentBean.BookCommentList
 import com.example.hp.readingyouself.readingDataSupport.DataConnector;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.BookInformation;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.BookInformationBean;
+import com.example.hp.readingyouself.readingDataSupport.dataForm.BookShelfBook;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.TheBookCommentListBean;
 
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.zip.Inflater;
 
 public class BookIntroductionActivity extends BaseActivity {
 
     public static final String BOOK_ID = "book_id";
+    public static final String CHAPTER_POSITION = "chapter_position";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +48,7 @@ public class BookIntroductionActivity extends BaseActivity {
     protected void initBeforeBindServiceOnCreated() {
         Intent intent = getIntent();
         bookId = intent.getStringExtra(BOOK_ID);
+        chapterPosition = intent.getIntExtra(CHAPTER_POSITION,0);
         setContentView(R.layout.activity_book_introduction);
         initWidget();
     }
@@ -63,8 +70,8 @@ public class BookIntroductionActivity extends BaseActivity {
         }
         if(msg.obj instanceof HashMap){
             if(msg.what == DataConnector.MESSAGE_WHAT_COVER){
-                Bitmap bitmap = ((HashMap<String,Bitmap>)msg.obj).get(bookInformationBean.getCover());
-                if(bitmap != null)coverImageView.setImageBitmap(bitmap);
+                coverBitmap = ((HashMap<String,Bitmap>)msg.obj).get(bookInformationBean.getCover());
+                if(coverBitmap != null)coverImageView.setImageBitmap(coverBitmap);
             }
             if(msg.what == DataConnector.MESSAGE_WHAT_PORTRAIT){
                 commentAuthorPortrait = ((HashMap<String,Bitmap>)msg.obj);
@@ -80,12 +87,24 @@ public class BookIntroductionActivity extends BaseActivity {
             }
             dataConnector.sendAuthorPortrait(avatars);
         }
+        if(msg.obj instanceof Boolean){
+            if((Boolean)msg.obj){
+                Toast.makeText(this,R.string.download_successful,Toast.LENGTH_SHORT).show();
+                this.isDownload = true;
+                this.downloadButton.setText(R.string.book_shelf_already_download);
+            }else{
+                Toast.makeText(this,R.string.download_unsuccessful,Toast.LENGTH_SHORT).show();
+                this.downloadButton.setClickable(true);
+                this.downloadButton.setText(R.string.download);
+            }
+        }
     }
 
     @Override
     protected void onDataServiceConnect() {
         dataConnector = getDataConnector();
         dataConnector.sendBookInformationBean(bookId);
+        theBookIsCollectAndIsDownload();
     }
 
     @Override
@@ -96,12 +115,14 @@ public class BookIntroductionActivity extends BaseActivity {
     //数据处理
     private String digest;
     private String bookId;
+    private int chapterPosition;
     private DataConnector dataConnector;
     private BookInformationBean bookInformationBean;
     private HashMap<String,Bitmap> commentAuthorPortrait;
     private TheBookCommentListBean theBookCommentListBean;
 
     //控件列表
+    private Bitmap coverBitmap;
     private ImageView coverImageView;
     private TextView digestTextView;
     private TextView followerNumberTextView;
@@ -127,8 +148,11 @@ public class BookIntroductionActivity extends BaseActivity {
         return null;
     }
 
+    private Button collectButton;
+    private Button downloadButton;
+
     //控件初始化
-    private void initWidget(){
+    private void initWidget() {
         coverImageView = findViewById(R.id.book_introduction_cover);
         digestTextView = findViewById(R.id.book_introduction_digest);
         followerNumberTextView = findViewById(R.id.book_introduction_follower_number);
@@ -140,32 +164,68 @@ public class BookIntroductionActivity extends BaseActivity {
         commentRecyclerView.setLayoutManager(linearLayoutManager);
         adapter = new CommentAdapter();
         commentRecyclerView.setAdapter(adapter);
-
         final Button startReading = findViewById(R.id.book_introduction_start_reading);
-        Button collect = findViewById(R.id.book_introduction_collect);
-        Button download = findViewById(R.id.book_introduction_download);
+        collectButton = findViewById(R.id.book_introduction_collect);
+        downloadButton = findViewById(R.id.book_introduction_download);
 
         startReading.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //如果上传有阅读的章节，就传入
-                Intent intent = new Intent(getBaseContext(),ReadingViewActivity.class);
-                intent.putExtra(ReadingViewActivity.BOOK_ID,bookId);
+                Intent intent = new Intent(getBaseContext(), ReadingViewActivity.class);
+                intent.putExtra(ReadingViewActivity.BOOK_ID, bookId);
+                intent.putExtra(ReadingViewActivity.CHAPTER_POSITION, chapterPosition);
                 startActivity(intent);
             }
         });
-        collect.setOnClickListener(new View.OnClickListener() {
+        collectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(isCollected){
+                    dataConnector.removeShelfBook(bookId);
+                    collectButton.setText(getString(R.string.collect));
+                }else{
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    coverBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    bookShelfBook = new BookShelfBook(bookInformationBean.getTitle(),bookInformationBean.get_id()
+                            ,stream.toByteArray(),chapterPosition,false,true);
+                    bookShelfBook.save();
+                    collectButton.setText(R.string.collect);
+                    isCollected = true;
+                }
             }
         });
-        download.setOnClickListener(new View.OnClickListener() {
+
+        downloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+               dataConnector.downloadBook(bookId);
+               downloadButton.setText(getString(R.string.downloading));
+               downloadButton.setClickable(false);
             }
         });
+    }
+
+    BookShelfBook bookShelfBook;
+    private boolean isCollected;
+    private boolean isDownload;
+
+    private void theBookIsCollectAndIsDownload(){
+        List<BookShelfBook> bookShelfBooks = dataConnector.getBookShelfBooks();
+        for (BookShelfBook shelfBook:bookShelfBooks) {
+            if(shelfBook.getbookIdentify().equals(bookId)){
+                isCollected = shelfBook.isCollect();
+                isDownload = shelfBook.isDownload();
+                this.bookShelfBook = shelfBook;
+            }
+        }
+        if(isCollected){
+            collectButton.setText(getString(R.string.book_shelf_already_collect));
+        }
+        if(isDownload){
+            downloadButton.setText(getString(R.string.book_shelf_already_download));
+            downloadButton.setClickable(false);
+        }
     }
 
     //评论

@@ -93,8 +93,18 @@
     <string name="start_reading">开始阅读</string>
     <string name="collect">收藏</string>
     <string name="download">下载</string>
+    <string name="start_download">下载开始</string>
+    <string name="downloading">正在下载</string>
+    <string name="download_successful">下载成功</string>
+    <string name="download_unsuccessful">下载失败</string>
 
     //search
     <string name="search_null">没有找到你想找的书</string>
+    <string name="clear_search_log">清空消息记录</string>
+
+    //bookShelf;
+    <string name="book_shelf_collect_book">看你收藏的好书</string>
+    <string name="book_shelf_already_download">已下载</string>
+    <string name="book_shelf_already_collect">已收藏</string>
 
 </resources>

@@ -1,8 +1,10 @@
 package com.example.hp.readingyouself.readingDataSupport.dataForm;
 
+import org.litepal.crud.DataSupport;
+
 import java.util.List;
 
-public class BookInformationBean {
+public class BookInformationBean extends DataSupport {
 
     /**
      * _id : 59ba0dbb017336e411085a4e
@@ -527,7 +529,7 @@ public class BookInformationBean {
         this.tags = tags;
     }
 
-    public static class RatingBean {
+    public static class RatingBean extends DataSupport{
         /**
          * count : 41830
          * score : 8.646

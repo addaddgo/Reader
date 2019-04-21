@@ -23,6 +23,8 @@ import com.example.hp.readingyouself.readingDataSupport.dataForm.SearchBookBean;
 import com.example.hp.readingyouself.readingDataSupport.dataForm.SearchLog;
 import com.example.hp.readingyouself.searchActivity.SearchActivity;
 
+import org.litepal.crud.DataSupport;
+
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashMap;
@@ -71,11 +73,20 @@ public class SearchFragment extends Fragment {
                     }
                     if(flag){
                         SearchLog searchLog = new SearchLog(newLog,System.currentTimeMillis());
-                        searchLog.save();//为什么将此方法放到onStop中不能保持
+                        searchLog.save();//为什么将此方法放到onStop中不能存
                         log.add(searchLog);
                     }
                 }
                 searchBook(newLog);
+            }
+        });
+        TextView clear = view.findViewById(R.id.search_log_clear);
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DataSupport.deleteAll(SearchLog.class);
+                log.clear();
+                adapter.notifyDataSetChanged();
             }
         });
     }

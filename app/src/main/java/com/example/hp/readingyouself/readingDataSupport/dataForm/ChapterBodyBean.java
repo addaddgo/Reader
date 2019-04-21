@@ -1,6 +1,8 @@
 package com.example.hp.readingyouself.readingDataSupport.dataForm;
 
-public class ChapterBodyBean {
+import org.litepal.crud.DataSupport;
+
+public class ChapterBodyBean extends DataSupport{
 
     /**
      * ok : true
@@ -26,7 +28,7 @@ public class ChapterBodyBean {
         this.chapter = chapter;
     }
 
-    public static class ChapterBean {
+    public static class ChapterBean extends DataSupport{
         /**
          * title : .
          * body : 在晋国都城新绛数里之外，耸立着一座夯土墙环绕的坚固小城，此城名为赵氏之宫，乃是晋国六大卿族之一，赵氏的私邑。

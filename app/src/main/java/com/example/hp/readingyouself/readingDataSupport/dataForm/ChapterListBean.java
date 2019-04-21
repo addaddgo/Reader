@@ -1,8 +1,10 @@
 package com.example.hp.readingyouself.readingDataSupport.dataForm;
 
+import org.litepal.crud.DataSupport;
+
 import java.util.List;
 
-public class ChapterListBean {
+public class ChapterListBean extends DataSupport {
 
 
     /**
@@ -94,7 +96,7 @@ public class ChapterListBean {
             this.chapters = chapters;
         }
 
-        public static class ChaptersBean {
+        public static class ChaptersBean extends DataSupport{
             /**
              * link : http://book.my716.com/getBooks.aspx?method=content&bookId=633074&chapterFile=U_753547_201607012243065574_6770_1.txt
              * title : 第1章 家族黑历史
